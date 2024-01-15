@@ -162,6 +162,9 @@ function config_settings_content(){
 add_shortcode('localizador', 'localizador_shortcode');
 
 function localizador_shortcode($atts, $content = ""){
+
+	require_once 'views/map.php';
+
 	wp_enqueue_style(
 		'style',
 		plugin_dir_url( __FILE__ ). 'css/style.css'
@@ -174,10 +177,7 @@ function localizador_shortcode($atts, $content = ""){
     );
     wp_localize_script('function', 'admin_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
 
-	return '
-		<div id="map-localizador" style="width: 100%; height: 500px;">
-		</div>
-	';
+	return $content;
 }
 
 function localizador(){
