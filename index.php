@@ -12,6 +12,7 @@ if(!defined('ABSPATH')){
     exit;
 }
 
+
 add_action( 'admin_menu', 'add_admin_localizador');
 
 function add_admin_localizador(){
