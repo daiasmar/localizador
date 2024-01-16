@@ -37,7 +37,7 @@
 
 	function register_options_localizador(){
 		register_setting( 
-			'_localizador', 
+			'_localizador_settings', 
 			'_localizador_api_key', 
 			array(
 				'type' => 'string',
@@ -46,7 +46,7 @@
 			)
 		);
 		register_setting( 
-			'_localizador', 
+			'_localizador_settings', 
 			'_localizador_region', 
 			array(
 				'type' => 'string',
@@ -55,7 +55,7 @@
 			)
 		);
 		register_setting( 
-			'_localizador', 
+			'_localizador_locations', 
 			'_localizador_locations', 
 			array(
 				'show_in_rest'      => true,
@@ -91,7 +91,7 @@
 	function localizador(){
 		$data = [
 			'api' => esc_attr(get_option('_localizador_api_key')),
-			'language' => esc_attr(get_option('_localizador_language')),
+			'locations' => get_option('_localizador_locations'),
 			'region' => esc_attr(get_option('_localizador_region')),
 		];
 		echo json_encode($data);

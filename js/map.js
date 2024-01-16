@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", e =>{
     .then(response => response.json())
     .then(data => {
         const apiGoogle = data.api;
+        console.log(data);
 
         let script = document.createElement('script');
         script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places`;
