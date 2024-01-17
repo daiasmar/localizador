@@ -3,7 +3,8 @@
     function locations_settings(){
         ?>
             <form action="options.php" method="post">
-                <?php settings_fields('_localizador_locations');?>
+
+                <?php settings_fields('_localizador_locations_group');?>
 
                 <h2 class="title">Nueva localización</h2>
                 <table class="form-table">
@@ -43,9 +44,27 @@
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Coordenadas</th>
+                        <th scope="row">Latitud</th>
                         <td>
-                            <input type="text" name="_localizador_locations[coordenadas]" placeholder="41.40338, 2.17403"/>
+                            <input type="text" name="_localizador_locations[latitud]" placeholder="ej 41.40338"/>
+                            <p class="description" id="api-key-description"></p>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Longitud</th>
+                        <td>
+                            <input type="text" name="_localizador_locations[longitud]" placeholder="ej 2.17403"/>
+                            <p class="description" id="api-key-description"></p>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">URL</th>
+                        <td>
+                            <?php wp_dropdown_pages(array(
+                                'name' => '_localizador_locations[URL]',
+                                'show_option_none' => 'Selecciona una página',
+                                'option_none_value' => ''
+                            )); ?>
                             <p class="description" id="api-key-description"></p>
                         </td>
                     </tr>
@@ -53,8 +72,7 @@
 
                 <?php submit_button(); ?>
             </form>
-
-            <pre><?php echo false  ?></pre>
+            <pre><?php print_r(get_option('_localizador_locations')) ?></pre>
         <?php
     }
     

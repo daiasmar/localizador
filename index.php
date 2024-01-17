@@ -37,28 +37,29 @@
 
 	function register_options_localizador(){
 		register_setting( 
-			'_localizador_settings', 
+			'_localizador_settings_group', 
 			'_localizador_api_key', 
 			array(
-				'type' => 'string',
+				'type' 				=> 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text',
 			)
 		);
 		register_setting( 
-			'_localizador_settings', 
+			'_localizador_settings_group', 
 			'_localizador_region', 
 			array(
-				'type' => 'string',
+				'type' 				=> 'string',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_text',
 			)
 		);
 		register_setting( 
-			'_localizador_locations', 
-			'_localizador_locations', 
+			'_localizador_locations_group', 
+			'_localizador_locations',
 			array(
-				'show_in_rest'      => true,
+				'type' 				=> 'array',
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'sanitize_locations',
 			)
 		);
@@ -84,6 +85,8 @@
 
 		return $content;
 	}
+
+	
 
 	add_action('wp_ajax_nopriv_localizador_ajax','localizador');
 	add_action('wp_ajax_localizador_ajax','localizador');
