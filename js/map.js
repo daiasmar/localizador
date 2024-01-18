@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", e =>{
     .then(response => response.json())
     .then(data => {
         const apiGoogle = data.api;
-        console.log(data);
-
+        /* console.log(data); */
+    
         let script = document.createElement('script');
         script.src = `https://maps.googleapis.com/maps/api/js?key=${apiGoogle}&libraries=places`;
         document.head.appendChild(script);
@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", e =>{
         document.body.appendChild(scriptInit);
         scriptInit.setAttribute('async','');
         scriptInit.setAttribute('defer','');
+
+        getLocation(data.locations);
+        
     })
 });
 
@@ -35,3 +38,11 @@ async function initMap(){
     });
     
 }
+
+// Función para traer las localizaciones
+function getLocation(localizaciones){
+    for(value of localizaciones){
+        console.log(value);
+    }  
+}
+

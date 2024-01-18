@@ -86,8 +86,6 @@
 		return $content;
 	}
 
-	
-
 	add_action('wp_ajax_nopriv_localizador_ajax','localizador');
 	add_action('wp_ajax_localizador_ajax','localizador');
 

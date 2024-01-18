@@ -1,0 +1,40 @@
+.overview-map{
+    background-color: #000;
+    width: 100%;
+    height: auto;
+    padding: 1.5rem;
+    height: 100vh;
+}
+.text-title{
+    width: 100%;
+    text-align: left;
+}
+.search-bar{
+    width: 100%;
+    height: 30px;
+    padding-bottom: 20px;
+}
+.search-bar input[type=search]{
+    padding-left: 15px;
+    border: 0;  
+}
+.dis-flex{
+    display: flex;
+}
+.logo-nut{
+    width: 40px;
+    height: 40px;
+}
+.column-left{
+    width: 30%;
+    gap: 20;
+}
+.column-right{
+    width: 70%;
+}
+.map-localizador{
+    width: 100%;
+    height: 100%;
+}
+
+
