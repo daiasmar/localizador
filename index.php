@@ -29,8 +29,28 @@
 			6
 		);
 
+		add_action('admin_enqueue_scripts', 'admin_scripts');
 	}
 
+	function admin_scripts($hook) {
+
+		if('toplevel_page_localizador-menu' != $hook){
+			return;
+		}
+
+		wp_enqueue_script(
+			'ajax',
+			plugin_dir_url( __FILE__ ). 'js/ajax.js',
+			array(),
+			null,
+			true
+		);
+		wp_localize_script('ajax', 'admin_ajax', array(
+			'url' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('ajax_nonce'),
+		));
+	}
+	
 	require_once 'includes/sanitize_callbacks.php';
 
 	add_action('admin_init', 'register_options_localizador');
@@ -81,7 +101,9 @@
 			array(),
 			null,
 		);
-		wp_localize_script('function', 'admin_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
+		wp_localize_script('function', 'admin_ajax', array(
+			'ajaxurl' => admin_url('admin-ajax.php'))
+		);
 
 		return $content;
 	}
@@ -99,4 +121,28 @@
 		exit;
 	}
 
+	add_action('wp_ajax_remove_location', 'remove_location_localizador');
+
+	function remove_location_localizador(){
+
+		$response['result'] = 'ko';
+
+		if(!wp_verify_nonce($_POST['nonce'],'ajax_nonce')){
+			return;
+		}
+
+		$locations = get_option('_localizador_locations');
+
+		foreach ($locations as $key => $location) {
+			if($location['id'] == $_POST['id']){
+				unset($locations[$key]);
+				update_option('_localizador_locations', $locations);
+				$response['result'] = 'ok';
+				break;
+			}
+		}
+
+		echo json_encode($response);
+    	exit;
+	}
 ?>
