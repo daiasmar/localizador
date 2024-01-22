@@ -1,18 +1,14 @@
 <?php
     $content = '
     <div class="overview-map">
-    <div class="text-title"><h2>Localización<h2></div>
+    <div class="text-title"><h2>LOCALIZACIONES<h2></div>
     <div class="content-map">
-        <div class="search-bar"><input type="search"></div>
+        <div class="search-bar"><input type="search" placeholder="Busca tu ciudad, código postal, ..."></div>
         <div class="columns-map dis-flex">
-            <div class="column-left">
-                <button class="button-points dis-flex" id="localPoints">
-                    <div class="logo-nut"></div>
-                    <div>
-                        <p>NUT Vallecas<p>
-                        <p>Calle de méjico, 13<p>
-                    </div>
-                </button>
+        <div class="container-external">
+            <div id="localPointsContainer" class="column-left">
+                
+            </div>
             </div>
             <div class="column-right">
                 <div id="map-localizador" class="map-styles"></div>
@@ -21,28 +17,6 @@
     </div>
 </div>
     ';
-    ?> 
-    <div class="">
-        <div class="text-title"><h2>Localización<h2></div>
-        <div class="content-map">
-            <div class="search-bar"><input type="search"></div>
-            <div class="columns-map">
-                <div class="column-left">
-                    <button class="button-points" id="localPoints">
-                        <div class="logo-nut"></div>
-                        <div>
-                            <p>NUT Vallecas<p>
-                            <p>Calle de méjico, 13<p>
-                        </div>
-                    </button>
-                </div>
-                <div class="column-right">
-                    <div id="map-localizador" class="map-styles"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php
 ?>
 
 

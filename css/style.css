@@ -3,11 +3,14 @@
     width: 100%;
     height: auto;
     padding: 1.5rem;
-    height: 100vh;
+    color: #fff;
 }
 .text-title{
     width: 100%;
-    text-align: left;
+    text-align: left;   
+}
+.text-title h2{
+    color: #fff !important;
 }
 .search-bar{
     width: 100%;
@@ -15,24 +18,105 @@
     padding-bottom: 20px;
 }
 .search-bar input[type=search]{
-    padding-left: 15px;
-    border: 0;  
+    padding-left: 10px;
+    padding-bottom: 5px;
+    background-color: #000;
+    border: 0;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+    width: 100%;
+}
+.search-bar input[type=search]::placeholder{
+    color: #fff;
 }
 .dis-flex{
     display: flex;
 }
+.button-points{
+    justify-content: left;
+    width: 100%;
+    align-items: center;
+    text-align: left;
+    background-color: transparent;
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 0;
+    border-bottom: 2px solid #fff;
+    cursor: pointer;
+}
+.button-points p{
+    margin: 7px;
+}
+.column-left a{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    z-index: 3;
+}
+.box-text-2:hover .planet-icon{
+    fill: #e8ca4d !important;
+}
+
+.planet-icon:hover{
+    fill: #e8ca4d !important;
+}
 .logo-nut{
-    width: 40px;
-    height: 40px;
+    background-color: rgb(19, 16, 188);
+    width: 45px;
+    height: 45px;  
+}
+.button-points:hover .logo-nut {
+    background-color: #e8ca4d;
+}
+.button-points.active .logo-nut {
+    fill: #e8ca4d;
+}
+.columns-map{
+    height: 600px;
+    gap: 50px;
+}
+.container-external {
+    width: 30%;
+    height: 98%;
+    direction: rtl;
+    overflow-y: auto;
+    padding-left: 10px;
 }
 .column-left{
-    width: 30%;
-    gap: 20;
+    width: 100%;
+    height: 100%;
+    direction: ltr;
+}
+.container-external::-webkit-scrollbar{
+    width: 3px;
+    background-color: #8e8e8e;
+    border-radius: 20px;
+}
+.container-external::-webkit-scrollbar:window-inactive {
+    display: none;
+}
+.container-external::-webkit-scrollbar-thumb  {
+    background-color: rgb(255, 255, 255);
+    border-radius: 6px;
 }
 .column-right{
     width: 70%;
+    height: 100%;
 }
-.map-localizador{
+.box-text-1{
+
+}
+.box-text-2{
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: end;
+    height: 38px;
+    margin-left: auto;
+}
+.map-styles{
     width: 100%;
     height: 100%;
 }
