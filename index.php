@@ -79,8 +79,7 @@
 			'_localizador_locations',
 			array(
 				'type' 				=> 'array',
-				'show_in_rest'      => false,
-				'sanitize_callback' => 'sanitize_locations',
+				'show_in_rest'      => true,
 			)
 		);
 	}
@@ -135,7 +134,8 @@
 
 		foreach ($locations as $key => $location) {
 			if($location['id'] == $_POST['id']){
-				unset($locations[$key]);
+				array_splice($locations, $key, 1);
+				// unset($locations[$key]);
 				update_option('_localizador_locations', $locations);
 				$response['result'] = 'ok';
 				break;

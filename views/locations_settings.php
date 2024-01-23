@@ -1,8 +1,10 @@
 <?php
 
+    require_once __DIR__.'/../includes/process.php';
+
     function locations_settings(){
         ?>
-            <form action="options.php" method="post">
+            <form action=<?php echo $_SERVER['REQUEST_URI']; ?> method="POST">
 
                 <?php settings_fields('_localizador_locations_group');?>
 
@@ -72,7 +74,7 @@
 
                 <?php submit_button(); ?>
             </form>
-            
+
             <?php $locations = get_option('_localizador_locations'); ?>
 
             <table class="widefat fixed striped">
@@ -93,6 +95,9 @@
                         <th>Longitud</th>
                         <th>URL</th>
                     </tr>
+
+                    <?php if(!empty($locations)) : ?>
+
                     <?php foreach($locations as $location) : ?>
 
                     <tr>
@@ -111,7 +116,7 @@
                                     <button type="button" class="button-link editinline">Editar</button> | 
                                 </span>
                                 <span class="trash">
-                                    <a href="#" data-id=<?php echo $location['id'] ?>>Eliminar</a>
+                                    <a href="" data-id=<?php echo $location['id'] ?>>Eliminar</a>
                                 </span>
                             </div>
                         </td>
@@ -134,7 +139,9 @@
                         </td>
                     </tr>
 
-                    <?php endforeach ?>    
+                    <?php endforeach ?>
+
+                    <?php endif ?>  
                 </thead>
             </table>
 
