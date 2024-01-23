@@ -42,7 +42,6 @@
         $locations_option[] = $location_data;
         return update_option('_localizador_locations', $locations_option);
 
-        // La primera ubicación se guarda unicamente cuando la opción esta ya añadida en la tabla wp_options.
     }
 
 ?>
