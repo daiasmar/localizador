@@ -50,17 +50,27 @@
 }
 .column-left a{
     position: relative;
-    width: 20px;
-    height: 20px;
+    color: #fff;
     z-index: 3;
-}
-.box-text-2:hover .planet-icon{
-    fill: #e8ca4d !important;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-.planet-icon:hover{
-    fill: #e8ca4d !important;
+.column-left a:hover{
+    position: relative;
+    color: #e8ca4d ;
+    z-index: 3;
+    text-decoration: none;
 }
+
+/* .box-text-2:hover .planet-icon{
+    fill: #e8ca4d !important;
+} */
+
+/* .planet-icon:hover{
+    fill: #e8ca4d !important;
+} */
 .logo-nut{
     background-color: rgb(19, 16, 188);
     width: 45px;
@@ -69,8 +79,8 @@
 .button-points:hover .logo-nut {
     background-color: #e8ca4d;
 }
-.button-points.active .logo-nut {
-    fill: #e8ca4d;
+.button-points .logo-nut.active {
+    background-color: #e8ca4d;
 }
 .columns-map{
     height: 600px;
@@ -104,9 +114,7 @@
     width: 70%;
     height: 100%;
 }
-.box-text-1{
 
-}
 .box-text-2{
     display: flex;
     flex-direction: column; 
