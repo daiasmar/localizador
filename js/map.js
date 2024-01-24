@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", e => {
         .then(response => response.json())
         .then(data => {
 
-            console.log(data.locations);
+            console.log(data);
             const apiGoogle = data.api;
 
             window.initMap = async function () {

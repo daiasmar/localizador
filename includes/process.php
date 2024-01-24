@@ -26,7 +26,7 @@
             'localidad' => sanitize_text_field($localidad),
             'ciudad' => sanitize_text_field($ciudad),
             'coordenadas' => array($latitud, $longitud),
-            'URL' => esc_url(get_permalink($URL)),
+            'URL' => absint($URL),
         );
 
         if(empty($locations_option)){
