@@ -1,3 +1,4 @@
+/* FUNCIONALIDADES MAPA */
 document.addEventListener("DOMContentLoaded", (e) => {
   let data = new FormData();
   data.append("action", "localizador_ajax");
