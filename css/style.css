@@ -74,13 +74,20 @@
     height: 45px;
 }
 
-.sede-click{
-    cursor: pointer;
+.logo-nut2 {
+    width: 45px;
+    height: 45px;
 }
 
-.sede-click .logo-nut.active {
-    background-color: #e8ca4d;
+.sede-click{
+    cursor: pointer;
+    display: flex;
+    width: 100%;
 }
+
+/* .sede-click .logo-nut.active {
+    background-color: #e8ca4d;
+} */
 
 .columns-map {
     height: 600px;
