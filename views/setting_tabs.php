@@ -1,7 +1,7 @@
 <?php
 
-    require_once 'locations_settings.php';
-    require_once 'settings_settings.php';
+    require_once 'setting_locations.php';
+    require_once 'setting_settings.php';
 
     function tabs(){
 
