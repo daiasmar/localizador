@@ -4,72 +4,90 @@
 
     function locations_settings(){
         ?>
+
             <form action=<?php echo $_SERVER['REQUEST_URI']; ?> method="POST">
 
                 <?php settings_fields('_localizador_locations_group');?>
 
-                <h2 class="title">Nueva localización</h2>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Sede</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[sede]"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Calle</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[calle]"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Código postal</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[cp]"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Localidad</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[localidad]"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Ciudad</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[ciudad]"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Latitud</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[latitud]" placeholder="ej 41.40338"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Longitud</th>
-                        <td>
-                            <input type="text" name="_localizador_locations[longitud]" placeholder="ej 2.17403"/>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">URL</th>
-                        <td>
-                            <?php wp_dropdown_pages(array(
-                                'name' => '_localizador_locations[URL]',
-                                'show_option_none' => 'Selecciona una página',
-                                'option_none_value' => ''
-                            )); ?>
-                            <p class="description" id="api-key-description"></p>
-                        </td>
-                    </tr>
+                <table class="wp-list-table widefat fixed striped table-view-list" style="margin-top:30px;">
+
+                    <tbody id="the-list">
+                        <tr class="inline-edit-row inline-edit-row-page quick-edit-row quick-edit-row-page inline-edit-page inline-editor">
+                            <td class="colspanchange">
+                                <div class="inline-edit-wrapper">
+                                    <fieldset class="inline-edit-col-left">
+                                        <legend class="inline-edit-legend">Nueva localización</legend>
+                                        <div class="inline-edit-col">
+                                            <label>
+                                                <span class="title">Sede</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[sede]" class="ptitle" placeholder="NUT Atocha">
+                                                    <p class="description">Introduzca el nombre del almacén.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Calle</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[calle]" class="ptitle" placeholder="Paseo de las Delicias, 100">
+                                                    <p class="description">Separa la dirección y el número con comas.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">CP</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[cp]" class="ptitle" placeholder="28045">
+                                                    <p class="description">Código postal.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Localidad</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Arganzuela">
+                                                    <p class="description">Municipio, localidad, distrito o barrio.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Ciudad</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Madrid">
+                                                    <p class="description">Provincia o ciudad.</p>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="inline-edit-col-right">
+                                        <div class="inline-edit-col">
+                                            <label>
+                                                <span class="title">Latitud</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[latitud]" class="ptitle" placeholder="41.40338">
+                                                    <p class="description">Valor comprendido entre -90 y 90.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Longitud</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text" name="_localizador_locations[longitud]" class="ptitle" placeholder="-2.17403">
+                                                    <p class="description">Valor comprendido entre -180 y 180.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Página</span>
+                                                <span class="input-text-wrap">
+                                                    <?php wp_dropdown_pages(array(
+                                                        'name' => '_localizador_locations[URL]',
+                                                        'show_option_none' => 'Selecciona la página',
+                                                        'option_none_value' => ''
+                                                    )); ?>
+                                                    <p class="description">Página de la sede.</p>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </td>
+                        </tr>             
+                    </tbody>
                 </table>
 
                 <?php submit_button(); ?>
@@ -77,7 +95,7 @@
 
             <?php $locations = get_option('_localizador_locations'); ?>
 
-            <table class="widefat fixed striped">
+            <table class="wp-list-table widefat fixed striped table-view-list">
                 <thead>
                     <tr>
                         <td id="cb" class="manage-column column-cb check-column">
@@ -95,12 +113,13 @@
                         <th>Longitud</th>
                         <th>URL</th>
                     </tr>
-
+                </thead>
+                <tbody id="the-list">
                     <?php if(!empty($locations)) : ?>
 
                     <?php foreach($locations as $location) : ?>
 
-                    <tr>
+                    <tr id="localizacion-<?php echo $location['id']?>"data-id=<?php echo $location['id'] ?>>
                         <th scope="row" class="check-column">
                             <input id="cb-select-2" type="checkbox" name="post[]" value="2">
                                 <label for="cb-select-2">
@@ -112,8 +131,8 @@
                         <td>
                             <strong><?php echo $location['sede']?></strong>
                             <div class="row-actions">
-                                <span class="inline hide-if-no-js">
-                                    <button type="button" class="button-link editinline">Editar</button> | 
+                                <span class="inline hide-if-no-js edit">
+                                    <button class="button-link editinline">Editar</button> | 
                                 </span>
                                 <span class="trash">
                                     <a href="" data-id=<?php echo $location['id'] ?>>Eliminar</a>
@@ -132,7 +151,7 @@
                             <?php if(!empty($location['URL'])) : ?>
 
                             <strong>
-                                <a class="row-title" href=<?php echo $location['URL']?>><?php echo get_the_title(url_to_postid($location['URL']))?></a>
+                                <a class="row-title" href=<?php echo get_permalink($location['URL'])?>><?php echo get_the_title($location['URL'])?></a>
                             </strong>
 
                             <?php endif ?>
@@ -141,11 +160,12 @@
 
                     <?php endforeach ?>
 
-                    <?php endif ?>  
-                </thead>
+                    <?php endif ?>
+                </tbody>
             </table>
 
             <pre><?php print_r(get_option('_localizador_locations')) ?></pre>
+
         <?php
     }
     
