@@ -27,7 +27,7 @@
         $longitud = $_POST['_localizador_locations']['longitud'];
         $URL = $_POST['_localizador_locations']['URL'];
     
-        if($_POST['submit'] == 'Guardar cambios'){
+        if($_POST['submit'] == 'Añadir una nueva localización'){
     
             if(!wp_verify_nonce($_POST['_wpnonce'], 'create_location')){
                 return;

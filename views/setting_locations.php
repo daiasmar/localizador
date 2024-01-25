@@ -21,35 +21,35 @@
                                             <label>
                                                 <span class="title">Sede</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[sede]" class="ptitle" placeholder="NUT Atocha">
+                                                    <input type="text" name="_localizador_locations[sede]" class="ptitle" placeholder="Sede nueva">
                                                     <p class="description">Introduzca el nombre del almacén.</p>
                                                 </span>
                                             </label>
                                             <label>
                                                 <span class="title">Calle</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[calle]" class="ptitle" placeholder="Paseo de las Delicias, 100">
+                                                    <input type="text" name="_localizador_locations[calle]" class="ptitle" placeholder="Dirección de la sede nueva">
                                                     <p class="description">Separa la dirección y el número con comas.</p>
                                                 </span>
                                             </label>
                                             <label>
                                                 <span class="title">CP</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[cp]" class="ptitle" placeholder="28045">
+                                                    <input type="text" name="_localizador_locations[cp]" class="ptitle" placeholder="00000">
                                                     <p class="description">Código postal.</p>
                                                 </span>
                                             </label>
                                             <label>
                                                 <span class="title">Localidad</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Arganzuela">
+                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Nueva localidad">
                                                     <p class="description">Municipio, localidad, distrito o barrio.</p>
                                                 </span>
                                             </label>
                                             <label>
                                                 <span class="title">Ciudad</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Madrid">
+                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Nueva ciudad">
                                                     <p class="description">Provincia o ciudad.</p>
                                                 </span>
                                             </label>
@@ -60,15 +60,15 @@
                                             <label>
                                                 <span class="title">Latitud</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[latitud]" class="ptitle" placeholder="41.40338">
-                                                    <p class="description">Valor comprendido entre -90 y 90.</p>
+                                                    <input type="text" name="_localizador_locations[latitud]" class="ptitle" placeholder="0.0000">
+                                                    <p class="description">Latitud expresada en grados geograficos decimales.</p>
                                                 </span>
                                             </label>
                                             <label>
                                                 <span class="title">Longitud</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[longitud]" class="ptitle" placeholder="-2.17403">
-                                                    <p class="description">Valor comprendido entre -180 y 180.</p>
+                                                    <input type="text" name="_localizador_locations[longitud]" class="ptitle" placeholder="0.0000">
+                                                    <p class="description">Longitud expresada en grados geograficos decimales.</p>
                                                 </span>
                                             </label>
                                             <label>
@@ -90,10 +90,12 @@
                     </tbody>
                 </table>
 
-                <?php submit_button(); ?>
+                <?php submit_button('Añadir una nueva localización'); ?>
             </form>
 
-            <?php $locations = get_option('_localizador_locations'); ?>
+            <?php $locations = array_reverse(get_option('_localizador_locations'));?>
+
+            <h2 class="title">Todas las localizaciones</h2>
 
             <table class="wp-list-table widefat fixed striped table-view-list">
                 <thead>
