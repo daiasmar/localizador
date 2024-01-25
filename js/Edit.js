@@ -1,9 +1,9 @@
 class Edit{
-    constructor(data, container, closest, pages){
+    constructor(data, container, closest, pages, nonce){
         this.editDom = null;
-        this.buildEdit(data, container, closest, pages);
+        this.buildEdit(data, container, closest, pages, nonce);
     }
-    buildEdit(data, container, closest, pages){
+    buildEdit(data, container, closest, pages, nonce){
 
         closest.style.display = "none";
 
@@ -18,6 +18,22 @@ class Edit{
 
         let div = document.createElement('div');
         div.classList.add('inline-edit-wrapper');
+
+        let form = document.createElement('form');
+        form.setAttribute('method', 'POST');
+        form.setAttribute('action', '?page=localizador-menu&tab=locations-settings');
+
+        let nonceInput = document.createElement('input');
+        nonceInput.setAttribute('type', 'hidden');
+        nonceInput.setAttribute('id', '_wpnonce');
+        nonceInput.setAttribute('name', '_wpnonce');
+        nonceInput.value = nonce;
+
+        let idInput = document.createElement('input');
+        idInput.setAttribute('type', 'hidden');
+        idInput.setAttribute('id', 'id');
+        idInput.setAttribute('name', 'id');
+        idInput.value = data.id;
 
         let leftFieldset = document.createElement('fieldset');
         leftFieldset.classList.add('inline-edit-col-left');
@@ -155,7 +171,7 @@ class Edit{
             let option = document.createElement('option');
             option.innerHTML = page.post_title;
             paginaSelect.appendChild(option);
-            optionSelect.value = page.ID;
+            option.value = page.ID;
 
             if(page.ID == data.URL){
                 option.selected = true;
@@ -226,7 +242,10 @@ class Edit{
         div.appendChild(leftFieldset);
         div.appendChild(rightFieldset);
         div.appendChild(buttonsDiv);
-        td.appendChild(div);
+        form.appendChild(idInput);
+        form.appendChild(nonceInput);
+        form.appendChild(div);
+        td.appendChild(form);
         this.editDom.appendChild(td);
         container.insertBefore(this.editDom, closest);
 

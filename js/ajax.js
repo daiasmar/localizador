@@ -45,9 +45,7 @@ editLocations.forEach(editLocation => {
         .then(response => response.json())
         .then(response => {
             if(response.result == 'ok'){
-                console.log(response.data)
-                console.log(response.pages)
-                new Edit(response.data, thead, row, response.pages);
+                new Edit(response.data, thead, row, response.pages, response.nonce);
             }
         });
     })

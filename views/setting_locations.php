@@ -5,9 +5,9 @@
     function locations_settings(){
         ?>
 
-            <form action=<?php echo $_SERVER['REQUEST_URI']; ?> method="POST">
+            <form action="?page=localizador-menu&tab=locations-settings" method="POST">
 
-                <?php settings_fields('_localizador_locations_group');?>
+                <?php wp_nonce_field('create_location');?>
 
                 <table class="wp-list-table widefat fixed striped table-view-list" style="margin-top:30px;">
 
@@ -163,10 +163,6 @@
                     <?php endif ?>
                 </tbody>
             </table>
-
-            <pre><?php print_r(get_option('_localizador_locations')) ?></pre>
-
         <?php
     }
-    
 ?>

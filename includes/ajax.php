@@ -63,6 +63,7 @@
             if($location['id'] == $_POST['id']){
                 array_slice($locations, $key, 1);
                 $response['data'] = $location;
+                $response['nonce'] = wp_create_nonce('update_location');
                 $response['pages'] = get_pages();
                 $response['result'] = 'ok';
                 break;
