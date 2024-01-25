@@ -165,9 +165,11 @@ class Edit{
         let buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('submit', 'inline-edit-save');
 
-        let buttonUpdate = document.createElement('button');
+        let buttonUpdate = document.createElement('input');
+        buttonUpdate.setAttribute('type', 'submit');
+        buttonUpdate.setAttribute('name', 'submit');
         buttonUpdate.classList.add('button', 'button-primary', 'save');
-        buttonUpdate.innerHTML = 'Actualizar';
+        buttonUpdate.value = 'Actualizar';
 
         let buttonCancel = document.createElement('button');
         buttonCancel.classList.add('button', 'cancel');
