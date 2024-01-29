@@ -97,7 +97,13 @@
                 <?php submit_button('Añadir una nueva localización'); ?>
             </form>
 
-            <?php $locations = array_reverse(get_option('_localizador_locations'));?>
+            <?php
+                $locations = get_option('_localizador_locations');
+                $orderby = $_GET['orderby'] ?? 'sede';
+                $order = $_GET['order'] ?? 'asc';
+                $order_constant = $order == 'asc' ? SORT_ASC : SORT_DESC;
+                array_multisort(array_column($locations, $orderby), $order_constant, $locations);
+            ?>
 
             <h2 class="title">Todas las localizaciones</h2>
 
@@ -110,11 +116,35 @@
                                 <span class="screen-reader-text">Seleccionar todo</span>
                             </label>
                         </td>
-                        <th>Sede</th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $order; ?>" >
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=sede&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Sede</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th>Calle</th>
                         <th>Código postal</th>
-                        <th>Localidad</th>
-                        <th>Ciudad</th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $order; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=localidad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Localidad</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $order; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=ciudad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Ciudad</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th>Latitud</th>
                         <th>Longitud</th>
                         <th>URL</th>
