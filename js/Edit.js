@@ -38,9 +38,9 @@ class Edit{
 
         this.editDom = createElements('tr', false, false, false, {'id' : `edit-${data.id}`}, ['inline-edit-row', 'inline-edit-row-page', 'quick-edit-row', 'quick-edit-row-page', 'inline-edit-page', 'inline-editor'])
 
-        let td = createElements('td', this.editDom, false, false, {'colspan' : 9}, ['colspanchange']);
+        let td = createElements('td', this.editDom, false, false, {'colspan' : 10}, ['colspanchange']);
 
-        let form = createElements('form', td, false, false, {'method' : 'POST', 'action' : '?page=localizador-menu&tab=locations-settings'});
+        let form = createElements('form', td, false, false, {'method' : 'POST', 'action' : '?page=localizador-menu&tab=setting-locations'});
 
         let div = createElements('div', form, false, false, false, ['inline-edit-wrapper']);
         createElements('input', form, nonce, false, {'type' : 'hidden', 'id' : '_wpnonce', 'name' : '_wpnonce'});
@@ -93,7 +93,7 @@ class Edit{
         createElements('span', paginaLabel, false, 'Página', false, ['title']);
         let paginaSpan = createElements('span', paginaLabel, false, false, false, ['input-text-wrap']);
         let paginaSelect = createElements('select', paginaSpan, false, false, {'name' : '_localizador_locations[URL]'});
-        createElements('option', paginaSelect, '', 'Selecciona la página')
+        createElements('option', paginaSelect, false, '— Elegir —', {'value' : 0})
 
         pages.forEach(page => {
             let option = document.createElement('option');
@@ -105,6 +105,10 @@ class Edit{
                 option.selected = true;
             }
         });
+
+        let promocionLabel = createElements('label', rightColumn);
+        createElements('input', promocionLabel, false, false, {'type' : 'checkbox', 'name' : '_localizador_locations[promocion]'});
+        createElements('span', promocionLabel, false, '¿Tiene promoción?', false, ['checkbox-title']);
 
         createElements('input', buttonsDiv, 'Actualizar', false, {'type' : 'submit', 'name' : 'submit'}, ['button', 'button-primary', 'save']);
         let buttonCancel = createElements('button', buttonsDiv, false, 'Cancelar', false, ['button', 'cancel']);

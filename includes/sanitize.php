@@ -2,15 +2,11 @@
 
     function sanitize_text($strt){
 
-        return $strt;
-        
-        // add_settings_error(
-        //     'myUniqueIdentifyer',
-        //     esc_attr( 'settings_updated' ),
-        //     'holi',
-        //     'error'
-        // );
-
+        return sanitize_text_field($strt);
     }
-    
+
+    function sanitize_number($int){
+
+        return absint($int);
+    }
 ?>
