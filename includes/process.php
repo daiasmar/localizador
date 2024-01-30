@@ -15,33 +15,67 @@
         if(!isset($_POST['_wpnonce'])){
             return;
         }
-    
+
+        if(empty($_POST['_localizador_locations']['sede'])){
+            add_settings_error('setting_locations', esc_attr('sede'), 'El campo "Sede" es obligatorio.');
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['calle'])){
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['cp']) || !preg_match('/^\d{5}$/', $_POST['_localizador_locations']['cp'])){
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['localidad'])){
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['ciudad'])){
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['latitud']) || !preg_match('/^-?\d{1,3}\.\d+$/', $_POST['_localizador_locations']['latitud']) || ($_POST['_localizador_locations']['latitud'] > 90 || $_POST['_localizador_locations']['latitud'] < -90)){
+            return;
+        }
+
+        if(empty($_POST['_localizador_locations']['longitud']) || !preg_match('/^-?\d{1,3}\.\d+$/', $_POST['_localizador_locations']['longitud']) || ($_POST['_localizador_locations']['longitud'] > 180 || $_POST['_localizador_locations']['longitud'] < -180)){
+            return;
+        }
+
+        if(!preg_match('/^\d*$/', $_POST['_localizador_locations']['URL'])){
+            return;
+        }
+
         $locations_option = get_option('_localizador_locations');
     
-        $sede = $_POST['_localizador_locations']['sede'];
-        $calle = $_POST['_localizador_locations']['calle'];
-        $cp = $_POST['_localizador_locations']['cp'];
-        $localidad = $_POST['_localizador_locations']['localidad'];
-        $ciudad = $_POST['_localizador_locations']['ciudad'];
+        $sede = sanitize_text_field($_POST['_localizador_locations']['sede']);
+        $calle = sanitize_text_field($_POST['_localizador_locations']['calle']);
+        $cp = absint($_POST['_localizador_locations']['cp']);
+        $localidad = sanitize_text_field($_POST['_localizador_locations']['localidad']);
+        $ciudad = sanitize_text_field($_POST['_localizador_locations']['ciudad']);
         $latitud = $_POST['_localizador_locations']['latitud'];
         $longitud = $_POST['_localizador_locations']['longitud'];
-        $URL = $_POST['_localizador_locations']['URL'];
+        $URL = absint($_POST['_localizador_locations']['URL']);
+        $promocion = $_POST['_localizador_locations']['promocion'] ?? false;
     
         if($_POST['submit'] == 'Añadir una nueva localización'){
     
             if(!wp_verify_nonce($_POST['_wpnonce'], 'create_location')){
                 return;
             }
-            echo 'bien';
     
             $location_data = array(
-                'sede' => sanitize_text_field($sede),
-                'calle' => sanitize_text_field($calle),
-                'cp' => absint($cp),
-                'localidad' => sanitize_text_field($localidad),
-                'ciudad' => sanitize_text_field($ciudad),
+                'sede' => $sede,
+                'calle' => $calle,
+                'cp' => $cp,
+                'localidad' => $localidad,
+                'ciudad' => $ciudad,
                 'coordenadas' => array($latitud, $longitud),
-                'URL' => absint($URL),
+                'URL' => $URL,
+                'promocion' => $promocion
             );
     
             if(empty($locations_option)){
@@ -74,6 +108,7 @@
                     $locations_option[$key]['coordenadas'][0] = $latitud;
                     $locations_option[$key]['coordenadas'][1] = $longitud;
                     $locations_option[$key]['URL'] = $URL;
+                    $locations_option[$key]['promocion'] = $promocion;
                     return update_option('_localizador_locations', $locations_option);
                 }
             }

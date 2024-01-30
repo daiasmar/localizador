@@ -38,6 +38,14 @@
 			return;
 		}
 
+		wp_enqueue_media();
+		wp_enqueue_script(
+			'mediaUploader',
+			plugin_dir_url( __FILE__ ). 'js/mediaUploader.js',
+			array(),
+			null,
+			true
+		);
 		wp_enqueue_script(
 			'Edit',
 			plugin_dir_url( __FILE__ ). 'js/Edit.js',
@@ -75,6 +83,51 @@
 		register_setting( 
 			'_localizador_settings_group', 
 			'_localizador_region', 
+			array(
+				'type' 				=> 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text',
+			)
+		);
+		register_setting( 
+			'_localizador_settings_group', 
+			'_localizador_icon_map',
+			array(
+				'type' 				=> 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
+			'_localizador_settings_group',
+			'_localizador_icon_map_active',
+			array(
+				'type' 				=> 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
+			'_localizador_settings_group',
+			'_localizador_icon_list',
+			array(
+				'type' 				=> 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
+			'_localizador_settings_group',
+			'_localizador_icon_list_active',
+			array(
+				'type' 				=> 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
+			'_localizador_promotion_group', 
+			'_localizador_promotion', 
 			array(
 				'type' 				=> 'string',
 				'show_in_rest'      => true,

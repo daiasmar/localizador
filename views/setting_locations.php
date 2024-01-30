@@ -2,10 +2,10 @@
 
     require_once __DIR__.'/../includes/process.php';
 
-    function locations_settings(){
+    function setting_locations(){
         ?>
 
-            <form action="?page=localizador-menu&tab=locations-settings" method="POST">
+            <form action="?page=localizador-menu&tab=setting-locations" method="POST">
 
                 <?php wp_nonce_field('create_location');?>
 
@@ -19,38 +19,31 @@
                                         <legend class="inline-edit-legend">Nueva localización</legend>
                                         <div class="inline-edit-col">
                                             <label>
-                                                <span class="title">Sede</span>
+                                                <span class="title">Sede *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[sede]" class="ptitle" placeholder="Sede nueva">
+                                                    <input type="text" name="_localizador_locations[sede]" class="ptitle" placeholder="Sede nueva" >
                                                     <p class="description">Introduzca el nombre del almacén.</p>
                                                 </span>
                                             </label>
                                             <label>
-                                                <span class="title">Calle</span>
+                                                <span class="title">Calle *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[calle]" class="ptitle" placeholder="Dirección de la sede nueva">
+                                                    <input type="text" name="_localizador_locations[calle]" class="ptitle" placeholder="Dirección de la sede nueva" >
                                                     <p class="description">Separa la dirección y el número con comas.</p>
                                                 </span>
                                             </label>
                                             <label>
-                                                <span class="title">CP</span>
+                                                <span class="title">CP *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[cp]" class="ptitle" placeholder="00000">
+                                                    <input type="number" name="_localizador_locations[cp]" class="ptitle" placeholder="00000" min="10000" max="99999">
                                                     <p class="description">Código postal.</p>
                                                 </span>
                                             </label>
                                             <label>
-                                                <span class="title">Localidad</span>
+                                                <span class="title">Localidad *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Nueva localidad">
+                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Nueva localidad" >
                                                     <p class="description">Municipio, localidad, distrito o barrio.</p>
-                                                </span>
-                                            </label>
-                                            <label>
-                                                <span class="title">Ciudad</span>
-                                                <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Nueva ciudad">
-                                                    <p class="description">Provincia o ciudad.</p>
                                                 </span>
                                             </label>
                                         </div>
@@ -58,17 +51,24 @@
                                     <fieldset class="inline-edit-col-right">
                                         <div class="inline-edit-col">
                                             <label>
-                                                <span class="title">Latitud</span>
+                                                <span class="title">Ciudad *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[latitud]" class="ptitle" placeholder="0.0000">
-                                                    <p class="description">Latitud expresada en grados geograficos decimales.</p>
+                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Nueva ciudad">
+                                                    <p class="description">Provincia o ciudad.</p>
                                                 </span>
                                             </label>
                                             <label>
-                                                <span class="title">Longitud</span>
+                                                <span class="title">Latitud *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[longitud]" class="ptitle" placeholder="0.0000">
-                                                    <p class="description">Longitud expresada en grados geograficos decimales.</p>
+                                                    <input type="number" step="any" name="_localizador_locations[latitud]" class="ptitle" placeholder="0.0">
+                                                    <p class="description">Comprendido entre -90 y 90 con decimales.</p>
+                                                </span>
+                                            </label>
+                                            <label>
+                                                <span class="title">Longitud *</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="number" step="any" name="_localizador_locations[longitud]" class="ptitle" placeholder="0.0">
+                                                    <p class="description">Comprendido entre -180 y 180 con decimales.</p>
                                                 </span>
                                             </label>
                                             <label>
@@ -76,11 +76,15 @@
                                                 <span class="input-text-wrap">
                                                     <?php wp_dropdown_pages(array(
                                                         'name' => '_localizador_locations[URL]',
-                                                        'show_option_none' => 'Selecciona la página',
-                                                        'option_none_value' => ''
+                                                        'show_option_none' => '— Elegir —',
+                                                        'option_none_value' => 0
                                                     )); ?>
-                                                    <p class="description">Página de la sede.</p>
+                                                    <p class="description"></p>
                                                 </span>
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="_localizador_locations[promocion]">
+                                                <span class="checkbox-title">¿Tiene promoción?</span>
                                             </label>
                                         </div>
                                     </fieldset>
@@ -93,7 +97,13 @@
                 <?php submit_button('Añadir una nueva localización'); ?>
             </form>
 
-            <?php $locations = array_reverse(get_option('_localizador_locations'));?>
+            <?php
+                $locations = get_option('_localizador_locations');
+                $orderby = $_GET['orderby'] ?? 'sede';
+                $order = $_GET['order'] ?? 'asc';
+                $order_constant = $order == 'asc' ? SORT_ASC : SORT_DESC;
+                array_multisort(array_column($locations, $orderby), $order_constant, $locations);
+            ?>
 
             <h2 class="title">Todas las localizaciones</h2>
 
@@ -106,14 +116,47 @@
                                 <span class="screen-reader-text">Seleccionar todo</span>
                             </label>
                         </td>
-                        <th>Sede</th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'sede' ? $order : ''; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=sede&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Sede</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th>Calle</th>
-                        <th>Código postal</th>
-                        <th>Localidad</th>
-                        <th>Ciudad</th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'cp' ? $order : ''; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=cp&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Código postal</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'localidad' ? $order : ''; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=localidad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Localidad</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'ciudad' ? $order : ''; ?>">
+                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=ciudad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Ciudad</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                        </th>
                         <th>Latitud</th>
                         <th>Longitud</th>
                         <th>URL</th>
+                        <th>¿Promoción?</th>
                     </tr>
                 </thead>
                 <tbody id="the-list">
@@ -158,6 +201,8 @@
 
                             <?php endif ?>
                         </td>
+
+                        <td><p><?php echo $location['promocion'] ? 'SI' : 'NO' ?></p></td>
                     </tr>
 
                     <?php endforeach ?>
