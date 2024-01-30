@@ -44,14 +44,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 lng: -3.7037902,
               };
               const zoomPredeterminado = 6.2;
-              map.setCenter(centroPredeterminado);
+              map.panTo(centroPredeterminado);
               map.setZoom(zoomPredeterminado);
             } else if (localizacionesFiltradas.length > 0) {
               const centroMapa = {
                 lat: parseFloat(localizacionesFiltradas[0].coordenadas[0]),
                 lng: parseFloat(localizacionesFiltradas[0].coordenadas[1]),
               };
-              map.setCenter(centroMapa);
+              map.panTo(centroMapa);
               map.setZoom(10);
             }
 
@@ -102,10 +102,61 @@ function getLocation(localizaciones) {
     const button = document.createElement("button");
     button.classList.add("button-points", "dis-flex");
 
+    button.addEventListener("click", () => {
+      // Primero, desactiva todos los botones y resetea los logos
+      document
+        .querySelectorAll(".button-points")
+        .forEach((otherButton, otherIndex) => {
+          otherButton.classList.remove("active"); // Remueve la clase 'active' de todos los botones
+          const otherLogoNut = otherButton.querySelector(
+            ".logo-nut, .logo-nut2"
+          ); // Encuentra el logo dentro del botón
+          if (otherLogoNut) {
+            otherLogoNut.src =
+              "http://localhost/nut/wp-content/uploads/2024/01/NUT_LOGO_2.svg"; // Establece todos los logos al logoNut original
+            otherLogoNut.classList.remove("logo-nut2");
+            otherLogoNut.classList.add("logo-nut");
+          }
+
+          // Restablece el icono del marcador al original
+          if (markers[otherIndex]) {
+            markers[otherIndex].setIcon({
+              url: "http://localhost/nut/wp-content/uploads/2024/01/icono-nut.png",
+              scaledSize: new google.maps.Size(35, 45),
+            });
+          }
+        });
+
+      // Ahora, activa el botón actual y cambia su logo a logoNut2
+      button.classList.add("active");
+      const logoNut = button.querySelector(".logo-nut"); // Asumiendo que el logo inicial tiene la clase 'logo-nut'
+      if (logoNut) {
+        logoNut.src =
+          "http://localhost/nut/wp-content/uploads/2024/01/logotipo_nut-2.svg";
+        logoNut.classList.remove("logo-nut");
+        logoNut.classList.add("logo-nut2");
+      }
+
+      // Configura el icono del marcador para el botón actual
+      if (markers[index]) {
+        markers[index].setIcon({
+          url: "http://localhost/nut/wp-content/uploads/2024/01/logo_nut_subrayado.png",
+          scaledSize: new google.maps.Size(46, 60),
+        });
+      }
+
+      // Centra el mapa en la ubicación del marcador
+      map.panTo(
+        new google.maps.LatLng(
+          parseFloat(value.coordenadas[0]),
+          parseFloat(value.coordenadas[1])
+        )
+      );
+      map.setZoom(10);
+    });
+
     const logoNut =
       '<img src="http://localhost/nut/wp-content/uploads/2024/01/NUT_LOGO_2.svg" class="logo-nut">';
-    const logoNut2 =
-      '<img src="http://localhost/nut/wp-content/uploads/2024/01/logotipo_nut-2.svg" class="logo-nut2">';
 
     const nombre = `<p>${value.sede ? value.sede : "Sede no disponible"}<p>`;
     const direccion = `<p>${
@@ -150,42 +201,5 @@ function getLocation(localizaciones) {
 
     markers.push(marker);
 
-    const sedeClickElements = button.getElementsByClassName("sede-click");
-    for (const sedeClickElement of sedeClickElements) {
-      sedeClickElement.addEventListener("click", () => {
-        document.querySelectorAll(".sede-click").forEach((btn, idx) => {
-          btn.classList.remove("active");
-          const logoNut = btn.querySelector(".logo-nut");
-          if (logoNut) {
-            logoNut.classList.remove("active");
-          }
-          markers[idx].setIcon({
-            url: "http://localhost/nut/wp-content/uploads/2024/01/icono-nut.png",
-            scaledSize: new google.maps.Size(35, 45),
-          });
-        });
-
-        sedeClickElement.classList.add("active");
-        const logoNutElement = sedeClickElement.querySelector(".logo-nut");
-        if (logoNutElement) {
-          logoNutElement.classList.add("active");
-        }
-
-        markers[index].setIcon({
-          url: "http://localhost/nut/wp-content/uploads/2024/01/icono-nut.png",
-          scaledSize: new google.maps.Size(46, 60),
-        });
-
-        map.panTo(
-          new google.maps.LatLng(
-            parseFloat(value.coordenadas[0]),
-            parseFloat(value.coordenadas[1])
-          )
-        );
-        setTimeout(() => {
-          map.setZoom(10);
-        }, 1000);
-      });
-    }
   });
 }
