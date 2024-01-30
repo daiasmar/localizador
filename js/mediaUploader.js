@@ -15,8 +15,8 @@ document.querySelectorAll('#media-uploader-button').forEach(element => {
         frame.on('select', () => {
             
             let attachment = frame.state().get('selection').first().toJSON();
-            e.currentTarget.closest('fieldset').querySelector('#attachment_id').value = attachment.id;
-            e.currentTarget.closest('fieldset').querySelector('#attachment_preview').setAttribute('src', attachment.url);
+            e.target.closest('.structure-selection').querySelector('#attachment_id').value = attachment.id;
+            e.target.closest('.structure-selection').querySelector('#attachment_preview').setAttribute('src', attachment.url);
         })
     
         frame.open();
@@ -27,6 +27,6 @@ document.querySelectorAll('#media-delete-icon').forEach(element => {
     
     element.addEventListener('click', e => {
 
-        e.currentTarget.closest('fieldset').querySelector('#attachment_id').value = "";
+        e.target.closest('.structure-selection').querySelector('#attachment_id').value = 0;
     })
 })
