@@ -1,7 +1,6 @@
 <?php
     $content = '
     <div class="overview-map">
-        <div class="text-title"><h2>LOCALIZACIONES<h2></div>
         <div class="content-map">
             <div class="search-bar"><input type="search" placeholder="Busca tu ciudad o código postal."></div>
             <div class="columns-map dis-flex">
