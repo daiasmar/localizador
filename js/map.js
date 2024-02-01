@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data.locations);
+      console.log(data);
       const apiGoogle = data.api;
 
       window.initMap = async function () {
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations);
+          getLocation(data.locations, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion);
         }
 
         document
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               terminoBusqueda === "" ||
               localizacionesFiltradas.length === 0
             ) {
-              // Si el término de búsqueda está vacío o no hay ubicaciones filtradas, establece el centro y zoom predeterminados
+
               const centroPredeterminado = {
                 lat: 40.4167754,
                 lng: -3.7037902,
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas);
+            getLocation(localizacionesFiltradas,  data.marker, data.marker_active, data.logo, data.logo_active, data.promotion);
           });
       };
 
@@ -85,7 +86,26 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText) {
+
+   // MENSAJE SI NO HAY RESULTADO.
+
+   const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
+
+  if (localizaciones.length === 0) {
+    const localPointsContainer = document.getElementById("localPointsContainer");
+    const imageElement = document.createElement('img');
+    imageElement.src = imageUrl;
+    imageElement.className = 'imagen-lupa';
+    imageElement.alt = 'Icono de no hay resultados';
+    localPointsContainer.appendChild(imageElement);
+    const paragraph = document.createElement('p');
+    paragraph.className = 'no-result';
+    paragraph.textContent = 'No hemos encontrado ningún trastero';
+    localPointsContainer.appendChild(paragraph);
+    return;
+  }
+
   //Orden de ciudad por alfabeto
   localizaciones.sort((a, b) => {
     if (a.ciudad < b.ciudad) return -1;
@@ -96,43 +116,38 @@ function getLocation(localizaciones) {
   });
 
   const localPointsContainer = document.getElementById("localPointsContainer");
-  //NOTA: Este forEach crea los botones iterando por el objeto.
+ 
   localizaciones.forEach((value, index) => {
-    console.log(value);
     const button = document.createElement("button");
-    button.classList.add("button-points", "dis-flex");
+    button.classList.add("button-points");
 
     button.addEventListener("click", () => {
-      // Primero, desactiva todos los botones y resetea los logos
       document
         .querySelectorAll(".button-points")
         .forEach((otherButton, otherIndex) => {
-          otherButton.classList.remove("active"); // Remueve la clase 'active' de todos los botones
+          otherButton.classList.remove("active");
           const otherLogoNut = otherButton.querySelector(
             ".logo-nut, .logo-nut2"
-          ); // Encuentra el logo dentro del botón
+          ); 
           if (otherLogoNut) {
-            otherLogoNut.src =
-              "http://localhost/nut/wp-content/uploads/2024/01/NUT_LOGO_2.svg"; // Establece todos los logos al logoNut original
+            otherLogoNut.src = logoOnly;
             otherLogoNut.classList.remove("logo-nut2");
             otherLogoNut.classList.add("logo-nut");
           }
 
-          // Restablece el icono del marcador al original
           if (markers[otherIndex]) {
             markers[otherIndex].setIcon({
-              url: "http://localhost/nut/wp-content/uploads/2024/01/icono-nut.png",
+              url: markerOnly,
               scaledSize: new google.maps.Size(35, 45),
             });
           }
         });
 
-      // Ahora, activa el botón actual y cambia su logo a logoNut2
       button.classList.add("active");
-      const logoNut = button.querySelector(".logo-nut"); // Asumiendo que el logo inicial tiene la clase 'logo-nut'
+      const logoNut = button.querySelector(".logo-nut");
       if (logoNut) {
         logoNut.src =
-          "http://localhost/nut/wp-content/uploads/2024/01/logotipo_nut-2.svg";
+          logoActive;
         logoNut.classList.remove("logo-nut");
         logoNut.classList.add("logo-nut2");
       }
@@ -140,7 +155,7 @@ function getLocation(localizaciones) {
       // Configura el icono del marcador para el botón actual
       if (markers[index]) {
         markers[index].setIcon({
-          url: "http://localhost/nut/wp-content/uploads/2024/01/logo_nut_subrayado.png",
+          url: markerActive,
           scaledSize: new google.maps.Size(46, 60),
         });
       }
@@ -155,32 +170,37 @@ function getLocation(localizaciones) {
       map.setZoom(10);
     });
 
-    const logoNut =
-      '<img src="http://localhost/nut/wp-content/uploads/2024/01/NUT_LOGO_2.svg" class="logo-nut">';
-
-    const nombre = `<p>${value.sede ? value.sede : "Sede no disponible"}<p>`;
+    const logoNut = `<img src="${logoOnly}" class="logo-nut">`;
+    const nombre = `<p><b>${value.sede ? value.sede : "Sede no disponible"}</b><p>`;
     const direccion = `<p>${
       value.calle ? value.calle : "Dirección no disponible"
     }<p>`;
+    const nombreCiudad = `<p>${value.ciudad}, ${value.cp}`;
     const web = `<a href="${
       value.URL ? value.URL : "#"
     }" target="_blank">+ info</a>`;
+    const promo = value.promocion == 'on' ? promoText : "";
     const buttonContent = `
       <div class="sede-click">
           ${logoNut}
           <div class="box-text-1">
               ${nombre}
               ${direccion}
-          </div>
-      
+              ${nombreCiudad}  
+          </div>  
       <div class="box-text-2">
           ${web}
       </div>
-      </div>`;
+      </div>
+      ${promo ? `<div class="promo-banner">
+      <div class="promo-content">${promo}</div>
+      <div class="promo-content">${promo}</div>
+  </div>
+  ` : ''}`;
 
-    console.log(
+  /*   console.log(
       `logoNut: ${logoNut}, nombre: ${nombre}, direccion: ${direccion}, web: ${web}`
-    );
+    ); */
 
     button.innerHTML = buttonContent;
 
@@ -194,7 +214,7 @@ function getLocation(localizaciones) {
       ),
       title: value.sede,
       icon: {
-        url: "http://localhost/nut/wp-content/uploads/2024/01/icono-nut.png", //NOTA: El icono del logo tenemos que enviarlo por url guardandolo en la tabla.
+        url: markerOnly, //NOTA: El icono del logo tenemos que enviarlo por url guardandolo en la tabla.
         scaledSize: new google.maps.Size(35, 42),
       },
     });
