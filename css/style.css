@@ -144,8 +144,6 @@
     display: block; 
 }
 
-
-
 .dis-flex {
     display: flex;
     flex-direction: row; /* Asumiendo una disposición en fila por defecto */
