@@ -30,11 +30,24 @@ class Edit{
     constructor(data, container, closest, pages, nonce){
         this.editDom = null;
         this.buildEdit(data, container, closest, pages, nonce);
+        this.containerChildren = null;
+        this.previousEdit = null;
     }
     
     buildEdit(data, container, closest, pages, nonce){
+        this.containerChildren = container.querySelectorAll('tr');
+
+        this.containerChildren.forEach(child => {
+            child.style.display = "table-row";
+        })
 
         closest.style.display = "none";
+
+        this.previousEdit = container.querySelector('tr.quick-edit-row');
+        
+        if(this.previousEdit){
+            this.previousEdit.remove();
+        }
 
         this.editDom = createElements('tr', false, false, false, {'id' : `edit-${data.id}`}, ['inline-edit-row', 'inline-edit-row-page', 'quick-edit-row', 'quick-edit-row-page', 'inline-edit-page', 'inline-editor'])
 
@@ -107,11 +120,16 @@ class Edit{
         });
 
         let promocionLabel = createElements('label', rightColumn);
-        createElements('input', promocionLabel, false, false, {'type' : 'checkbox', 'name' : '_localizador_locations[promocion]'});
+        let promocionInput = createElements('input', promocionLabel, false, false, {'type' : 'checkbox', 'name' : '_localizador_locations[promocion]'});
         createElements('span', promocionLabel, false, '¿Tiene promoción?', false, ['checkbox-title']);
+
+        if(data.promocion){
+            promocionInput.checked = true;
+        }
 
         createElements('input', buttonsDiv, 'Actualizar', false, {'type' : 'submit', 'name' : 'submit'}, ['button', 'button-primary', 'save']);
         let buttonCancel = createElements('button', buttonsDiv, false, 'Cancelar', false, ['button', 'cancel']);
+
 
         container.insertBefore(this.editDom, closest);
 

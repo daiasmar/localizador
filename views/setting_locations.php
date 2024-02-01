@@ -110,12 +110,7 @@
             <table class="wp-list-table widefat fixed striped table-view-list">
                 <thead>
                     <tr>
-                        <td id="cb" class="manage-column column-cb check-column">
-                            <input id="cb-select-all-1" type="checkbox">
-                            <label for="cb-select-all-1">
-                                <span class="screen-reader-text">Seleccionar todo</span>
-                            </label>
-                        </td>
+                        <td id="cb" class="manage-column column-cb check-column"></td>
                         <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'sede' ? $order : ''; ?>">
                             <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=sede&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
                                 <span>Sede</span>
@@ -165,13 +160,8 @@
                     <?php foreach($locations as $location) : ?>
 
                     <tr id="localizacion-<?php echo $location['id']?>"data-id=<?php echo $location['id'] ?>>
-                        <th scope="row" class="check-column">
-                            <input id="cb-select-2" type="checkbox" name="post[]" value="2">
-                                <label for="cb-select-2">
-                                    <span class="screen-reader-text">Seleccionar Página de ejemplo</span>
-                                </label>
-                            <div class="locked-indicator"><span class="locked-indicator-icon" aria-hidden="true"></span><span class="screen-reader-text">«Página de ejemplo» está bloqueado</span></div>
-                        </th>
+                        
+                        <th scope="row" class="check-column"></th>
 
                         <td>
                             <strong><?php echo $location['sede']?></strong>
