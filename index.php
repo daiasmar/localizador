@@ -82,15 +82,6 @@
 		);
 		register_setting( 
 			'_localizador_settings_group', 
-			'_localizador_region', 
-			array(
-				'type' 				=> 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text',
-			)
-		);
-		register_setting( 
-			'_localizador_settings_group', 
 			'_localizador_icon_map',
 			array(
 				'type' 				=> 'number',

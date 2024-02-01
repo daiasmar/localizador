@@ -15,33 +15,22 @@
                         </td>
                     </tr>
                 </table>
-
-                <h2 class="title">Ajustes del mapa</h2>
-                <table class="form-table permalink-structure">
-                    <tr valign="top">
-                        <th scope="row">Región</th>
-                        <td>
-                            <input type="text" name="_localizador_region" value="<?php echo esc_attr(get_option('_localizador_region'));?>"/>
-                            <p class="description">Esta función controla la región de la Google API. Ingresa el código del país, por ejemplo, para España es ES. Puedes encontrar el código del país <a href="https://developers.google.com/maps/coverage?hl=es">aquí</a></p>
-                        </td>
-                    </tr>
-                </table>
                 
-                <h2 class="title">Iconos del mapa</h2>
+                <h2 class="title">Ajustes del mapa</h2>
                 <table class="form-table permalink-structure">
                     <tr valign="top">
                         <th scope="row">Marcador</th>
                         <td>
                             <fieldset class="structure-selection">
                                 <input type="hidden" name="_localizador_icon_map" id="attachment_id" value=<?php echo get_option('_localizador_icon_map')?>>
-                                <div class="row" style="height: 100px;" >
-                                    <img id="attachment_preview" style="height: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map'), 'full', true))?> />
+                                <div class="row" style="width: 100px;" >
+                                    <img id="attachment_preview" style="width: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map'), 'full', true))?> />
                                 </div>
-                                <button class="button button-hero" id="media-uploader-button">Seleccionar icono</button>
+                                <button class="button" id="media-uploader-button">Seleccionar icono</button>
                                 <?php
                                     if(get_option('_localizador_icon_map')){
                                         ?>
-                                            <button class="button button-hero" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;">Eliminar</button>
+                                            <button class="button" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;">Eliminar</button>
                                         <?php
                                     }
                                 ?>
@@ -54,14 +43,14 @@
                         <td>
                             <fieldset class="structure-selection">
                                 <input type="hidden" name="_localizador_icon_map_active" id="attachment_id" value=<?php echo get_option('_localizador_icon_map_active')?>>
-                                <div class="row" style="height: 100px;" >
-                                    <img id="attachment_preview" style="height: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true))?> />
+                                <div class="row" style="width: 100px;" >
+                                    <img id="attachment_preview" style="width: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true))?> />
                                 </div>
-                                <button class="button button-hero" id="media-uploader-button">Seleccionar icono</button>
+                                <button class="button" id="media-uploader-button">Seleccionar icono</button>
                                 <?php
                                     if(get_option('_localizador_icon_map_active')){
                                         ?>
-                                            <button class="button button-hero" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
+                                            <button class="button" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
                                         <?php
                                     }
                                 ?>
@@ -74,14 +63,14 @@
                         <td>
                             <fieldset class="structure-selection">
                                 <input type="hidden" name="_localizador_icon_list" id="attachment_id" value=<?php echo get_option('_localizador_icon_list')?>>
-                                <div class="row" style="height: 100px;" >
-                                    <img id="attachment_preview" style="height: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true))?> />
+                                <div class="row" style="width: 100px;" >
+                                    <img id="attachment_preview" style="width: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true))?> />
                                 </div>
-                                <button class="button button-hero" id="media-uploader-button">Seleccionar icono</button>
+                                <button class="button" id="media-uploader-button">Seleccionar icono</button>
                                 <?php
                                     if(get_option('_localizador_icon_list')){
                                         ?>
-                                            <button class="button button-hero" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
+                                            <button class="button" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
                                         <?php
                                     }
                                 ?>
@@ -94,14 +83,14 @@
                         <td>
                             <fieldset class="structure-selection">
                                 <input type="hidden" name="_localizador_icon_list_active" id="attachment_id" value=<?php echo get_option('_localizador_icon_list_active')?>>
-                                <div class="row" style="height: 100px;" >
-                                    <img id="attachment_preview" style="height: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true))?> />
+                                <div class="row" style="width: 100px;" >
+                                    <img id="attachment_preview" style="width: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true))?> />
                                 </div>
-                                <button class="button button-hero" id="media-uploader-button">Seleccionar icono</button>
+                                <button class="button" id="media-uploader-button">Seleccionar icono</button>
                                 <?php
                                     if(get_option('_localizador_icon_list_active')){
                                         ?>
-                                            <button class="button button-hero" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
+                                            <button class="button" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
                                         <?php
                                     }
                                 ?>
