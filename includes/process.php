@@ -9,10 +9,12 @@
         }
     
         if(empty($_POST['_localizador_locations'])){
+            add_settings_error('setting_locations', esc_attr('error'), 'No se ha podido registrar la localización. Inténtelo más tarde.');
             return;
         }
     
         if(!isset($_POST['_wpnonce'])){
+            add_settings_error('setting_locations', esc_attr('error'), 'No se ha podido registrar la localización. Inténtelo más tarde.');
             return;
         }
 
@@ -22,26 +24,32 @@
         }
 
         if(empty($_POST['_localizador_locations']['calle'])){
+            add_settings_error('setting_locations', esc_attr('calle'), 'El campo "Calle" es obligatorio.');
             return;
         }
 
         if(empty($_POST['_localizador_locations']['cp']) || !preg_match('/^\d{5}$/', $_POST['_localizador_locations']['cp'])){
+            add_settings_error('setting_locations', esc_attr('cp'), 'El campo "CP" debe tener 5 dígitos y es obligatorio');
             return;
         }
 
         if(empty($_POST['_localizador_locations']['localidad'])){
+            add_settings_error('setting_locations', esc_attr('localidad'), 'El campo "Localidad" es obligatorio.');
             return;
         }
 
         if(empty($_POST['_localizador_locations']['ciudad'])){
+            add_settings_error('setting_locations', esc_attr('ciudad'), 'El campo "Ciudad" es obligatorio.');
             return;
         }
 
         if(empty($_POST['_localizador_locations']['latitud']) || !preg_match('/^-?\d{1,3}\.\d+$/', $_POST['_localizador_locations']['latitud']) || ($_POST['_localizador_locations']['latitud'] > 90 || $_POST['_localizador_locations']['latitud'] < -90)){
+            add_settings_error('setting_locations', esc_attr('latitud'), 'El campo "Latitud" es obligatorio y tiene que ser un número con decimales comprendido entre -90 y 90.');
             return;
         }
 
         if(empty($_POST['_localizador_locations']['longitud']) || !preg_match('/^-?\d{1,3}\.\d+$/', $_POST['_localizador_locations']['longitud']) || ($_POST['_localizador_locations']['longitud'] > 180 || $_POST['_localizador_locations']['longitud'] < -180)){
+            add_settings_error('setting_locations', esc_attr('latitud'), 'El campo "Longitud" es obligatorio y tiene que ser un número con decimales comprendido entre -180 y 180.');
             return;
         }
 
