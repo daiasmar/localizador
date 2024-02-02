@@ -20,6 +20,10 @@
             'marker_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true)),
             'logo' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true)),
             'logo_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true)),
+            'promotion_style' => array(
+                'color' => esc_attr(get_option('_localizador_color')),
+                'background' => esc_attr(get_option('_localizador_background'))
+            )
         ];
 
         echo json_encode($data);

@@ -112,7 +112,7 @@
                     <tr>
                         <td id="cb" class="manage-column column-cb check-column"></td>
                         <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'sede' ? $order : ''; ?>">
-                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=sede&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=sede&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
                                 <span>Sede</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
@@ -122,7 +122,7 @@
                         </th>
                         <th>Calle</th>
                         <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'cp' ? $order : ''; ?>">
-                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=cp&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=cp&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
                                 <span>Código postal</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
@@ -131,7 +131,7 @@
                             </a>
                         </th>
                         <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'localidad' ? $order : ''; ?>">
-                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=localidad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=localidad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
                                 <span>Localidad</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
@@ -140,7 +140,7 @@
                             </a>
                         </th>
                         <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'ciudad' ? $order : ''; ?>">
-                            <a href="http://localizador.test/wp-admin/?page=localizador-menu&tab=setting-locations&orderby=ciudad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=ciudad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
                                 <span>Ciudad</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>

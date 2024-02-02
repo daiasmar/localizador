@@ -7,15 +7,13 @@
         if($_SERVER['REQUEST_METHOD'] != 'POST'){
             return;
         }
-        
     
         if(empty($_POST['_localizador_locations'])){
-            add_settings_error('setting_locations', esc_attr('error'), 'No se ha podido registrar la localización. Inténtelo más tarde.');
             return;
         }
     
         if(!isset($_POST['_wpnonce'])){
-            add_settings_error('setting_locations', esc_attr('error'), 'No se ha podido registrar la localización. Inténtelo más tarde.');
+            add_settings_error('setting_locations', esc_attr('error'), 'Se ha producido un error. Inténtelo más tarde.');
             return;
         }
 

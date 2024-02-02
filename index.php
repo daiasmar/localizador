@@ -126,6 +126,24 @@
 			)
 		);
 		register_setting( 
+			'_localizador_promotion_group', 
+			'_localizador_color', 
+			array(
+				'type' 				=> 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_hex',
+			)
+		);
+		register_setting( 
+			'_localizador_promotion_group', 
+			'_localizador_background', 
+			array(
+				'type' 				=> 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_hex',
+			)
+		);
+		register_setting( 
 			'_localizador_locations_group', 
 			'_localizador_locations',
 			array(
