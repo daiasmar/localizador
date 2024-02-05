@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data.locations);
+      const ciudadesDisponibles = Array.from(new Set(data.locations.map(location => location.ciudad)));
+
       console.log(data);
       const apiGoogle = data.api;
 
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion);
+          getLocation(data.locations, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion, data.promotion_style, ciudadesDisponibles);
         }
 
         document
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas,  data.marker, data.marker_active, data.logo, data.logo_active, data.promotion);
+            getLocation(localizacionesFiltradas, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion, data.promotion_style, ciudadesDisponibles);
           });
       };
 
@@ -86,11 +88,11 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionStyle, ciudadesDisponibles) {
 
-   // MENSAJE SI NO HAY RESULTADO.
 
-   const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
+  // MENSAJE SI NO HAY RESULTADO.
+  const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
 
   if (localizaciones.length === 0) {
     const localPointsContainer = document.getElementById("localPointsContainer");
@@ -103,8 +105,34 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     paragraph.className = 'no-result';
     paragraph.textContent = 'No hemos encontrado ningún trastero';
     localPointsContainer.appendChild(paragraph);
+    console.log(ciudadesDisponibles, "////////");
+  
+    // Crear un nuevo div para contener los botones
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'buttons-container'; // Añade aquí las clases de estilo que necesites
+  
+    ciudadesDisponibles.forEach(ciudad => {
+      const cityButton = document.createElement("button");
+      cityButton.textContent = ciudad;
+      cityButton.classList.add("city-button");
+  
+      cityButton.addEventListener('click', () => {
+        const searchInput = document.querySelector('.search-bar input[type="search"]');
+        searchInput.value = ciudad;
+        searchInput.dispatchEvent(new Event('input'));
+      });
+  
+      // Añadir el botón al div de botones en lugar de al contenedor principal
+      buttonsContainer.appendChild(cityButton);
+    });
+  
+    // Añadir el div de botones al contenedor principal después de añadir todos los botones
+    localPointsContainer.appendChild(buttonsContainer);
+  
     return;
   }
+  
+  
 
   //Orden de ciudad por alfabeto
   localizaciones.sort((a, b) => {
@@ -116,7 +144,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
   });
 
   const localPointsContainer = document.getElementById("localPointsContainer");
- 
+
   localizaciones.forEach((value, index) => {
     const button = document.createElement("button");
     button.classList.add("button-points");
@@ -128,7 +156,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           otherButton.classList.remove("active");
           const otherLogoNut = otherButton.querySelector(
             ".logo-nut, .logo-nut2"
-          ); 
+          );
           if (otherLogoNut) {
             otherLogoNut.src = logoOnly;
             otherLogoNut.classList.remove("logo-nut2");
@@ -172,13 +200,11 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
 
     const logoNut = `<img src="${logoOnly}" class="logo-nut">`;
     const nombre = `<p><b>${value.sede ? value.sede : "Sede no disponible"}</b><p>`;
-    const direccion = `<p>${
-      value.calle ? value.calle : "Dirección no disponible"
-    }<p>`;
+    const direccion = `<p>${value.calle ? value.calle : "Dirección no disponible"
+      }<p>`;
     const nombreCiudad = `<p>${value.ciudad}, ${value.cp}`;
-    const web = `<a href="${
-      value.URL ? value.URL : "#"
-    }" target="_blank">+ info</a>`;
+    const web = `<a href="${value.URL ? value.URL : "#"
+      }" target="_blank">+ info</a>`;
     const promo = value.promocion == 'on' ? promoText : "";
     const buttonContent = `
       <div class="sede-click">
@@ -192,15 +218,14 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           ${web}
       </div>
       </div>
-      ${promo ? `<div class="promo-banner">
+      ${promo ? `<div class="promo-banner" style="background:${promotionStyle.background}; color:${promotionStyle.color};">
       <div class="promo-content">${promo}</div>
       <div class="promo-content">${promo}</div>
-  </div>
-  ` : ''}`;
+      </div>` : ''}`;
 
-  /*   console.log(
-      `logoNut: ${logoNut}, nombre: ${nombre}, direccion: ${direccion}, web: ${web}`
-    ); */
+    /*   console.log(
+        `logoNut: ${logoNut}, nombre: ${nombre}, direccion: ${direccion}, web: ${web}`
+      ); */
 
     button.innerHTML = buttonContent;
 
