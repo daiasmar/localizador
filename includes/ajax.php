@@ -14,13 +14,14 @@
         $data = [
             'api' => esc_attr(get_option('_localizador_api_key')),
             'locations' => $locations,
-            'region' => esc_attr(get_option('_localizador_region')),
-            'promotion' => esc_attr(get_option('_localizador_promotion')),
-            'marker' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map'), 'full', true)),
-            'marker_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true)),
-            'logo' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true)),
-            'logo_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true)),
-            'promotion_style' => array(
+            'media' => array(
+                'marker' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map'), 'full', true)),
+                'marker_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true)),
+                'logo' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true)),
+                'logo_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true)),
+            ),
+            'promotion' => array(
+                'message' => esc_attr(get_option('_localizador_promotion')),
                 'color' => esc_attr(get_option('_localizador_color')),
                 'background' => esc_attr(get_option('_localizador_background'))
             )
