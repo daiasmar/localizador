@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, ciudadesDisponibles);
+          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
         }
 
         document
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, ciudadesDisponibles);
+            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
           });
       };
 
@@ -87,7 +87,7 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionColor, promotionBackground, ciudadesDisponibles) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionColor, promotionBackground, promotionEffect, ciudadesDisponibles) {
 
   // MENSAJE SI NO HAY RESULTADO.
   const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
@@ -173,7 +173,6 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         logoNut.classList.add("logo-nut2");
       }
 
-      // Configura el icono del marcador para el botón actual
       if (markers[index]) {
         markers[index].setIcon({
           url: markerActive,
@@ -181,7 +180,6 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         });
       }
 
-      // Centra el mapa en la ubicación del marcador
       map.panTo(
         new google.maps.LatLng(
           parseFloat(value.coordenadas[0]),
@@ -199,6 +197,21 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     const web = `<a href="${value.URL ? value.URL : "#"
       }" target="_blank">+ info</a>`;
     const promo = value.promocion == 'on' ? promoText : "";
+
+    let divContent;
+      if (promo && promotionEffect !== "1") {
+        divContent = `<div class="otro-div" style="background:${promotionBackground}; color:${promotionColor};">
+        <div class="no-effect">${promo}</div>
+        </div>`;
+      } else if (promo) {
+        divContent = `<div class="promo-banner" style="background:${promotionBackground}; color:${promotionColor};">
+        <div class="promo-content">${promo}</div>
+        <div class="promo-content">${promo}</div>
+        </div>`;
+      } else {
+        divContent = '';
+      }
+
     const buttonContent = `
       <div class="sede-click">
           ${logoNut}
@@ -211,10 +224,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           ${web}
       </div>
       </div>
-      ${promo ? `<div class="promo-banner" style="background:${promotionBackground}; color:${promotionColor};">
-      <div class="promo-content">${promo}</div>
-      <div class="promo-content">${promo}</div>
-      </div>` : ''}`;
+      ${divContent}`;
 
     button.innerHTML = buttonContent;
 
