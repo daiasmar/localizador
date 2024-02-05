@@ -146,7 +146,7 @@
 
 .dis-flex {
     display: flex;
-    flex-direction: row; /* Asumiendo una disposición en fila por defecto */
+    flex-direction: row;
 }
 
 .no-result{
@@ -159,8 +159,6 @@
     overflow: hidden;
     white-space: nowrap;
     position: relative;
-  /*   background: #e8ca4d;
-    color: #000; */
     padding: 3px;
     font-weight: 700;
 }
@@ -169,6 +167,10 @@
     display: inline-block;
     padding-left: 20%;
     animation: scroll-left 20s linear infinite;
+    font-size: 12px;
+    padding-top: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
 }
 
 @keyframes scroll-left {
@@ -182,8 +184,8 @@
 
 .buttons-container{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Esto crea dos columnas de igual ancho */
-    gap: 10px; /* Espacio entre botones */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     overflow-y: auto;
     max-height: 300px;
     width: 100%;
@@ -199,18 +201,27 @@
 } */
 
 .city-button {
-    background-color: #fff;
-    color: #000;
-    border: none;
+    color: #fff;
+    border: 2px solid #fff;
+    background: transparent;
+    border-radius: 6px;
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
     flex-basis: calc(33.333% - 10px);
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
 }
 
 .city-button:hover {
-    background-color: #e2e2e2; /* Color al pasar el mouse */
+    background-color: #e8ca4d !important;
+    color: #000;
+    border: none;
+}
+
+.city-button:hover {
+    background-color: #e2e2e2;
 }
 
 @media (max-width: 768px) {
@@ -241,24 +252,22 @@
     }
     
     .container-external {
-        order: 2; /* Esto moverá la columna izquierda para que se muestre después de la derecha en dispositivos móviles */
+        order: 2;
         width: 100%;
     }
 
     .column-right {
-        order: 1; /* Esto moverá la columna derecha para que se muestre antes de la izquierda en dispositivos móviles */
+        order: 1;
         width: 100%;
-
     }
 
     .buttons-container{
         display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Esto crea dos columnas de igual ancho */
-    gap: 10px; /* Espacio entre botones */
-    overflow-y: auto;
-    max-height: 300px;
-    width: 100%;
-        
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        overflow-y: auto;
+        max-height: 300px;
+        width: 100%;     
     }
     
 }

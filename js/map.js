@@ -1,4 +1,3 @@
-/* FUNCIONALIDADES MAPA */
 document.addEventListener("DOMContentLoaded", (e) => {
   let data = new FormData();
   data.append("action", "localizador_ajax");
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion, data.promotion_style, ciudadesDisponibles);
+          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, ciudadesDisponibles);
         }
 
         document
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas, data.marker, data.marker_active, data.logo, data.logo_active, data.promotion, data.promotion_style, ciudadesDisponibles);
+            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, ciudadesDisponibles);
           });
       };
 
@@ -88,8 +87,7 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionStyle, ciudadesDisponibles) {
-
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionColor, promotionBackground, ciudadesDisponibles) {
 
   // MENSAJE SI NO HAY RESULTADO.
   const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
@@ -107,9 +105,8 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     localPointsContainer.appendChild(paragraph);
     console.log(ciudadesDisponibles, "////////");
   
-    // Crear un nuevo div para contener los botones
     const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'buttons-container'; // Añade aquí las clases de estilo que necesites
+    buttonsContainer.className = 'buttons-container';
   
     ciudadesDisponibles.forEach(ciudad => {
       const cityButton = document.createElement("button");
@@ -122,18 +119,14 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         searchInput.dispatchEvent(new Event('input'));
       });
   
-      // Añadir el botón al div de botones en lugar de al contenedor principal
       buttonsContainer.appendChild(cityButton);
     });
   
-    // Añadir el div de botones al contenedor principal después de añadir todos los botones
     localPointsContainer.appendChild(buttonsContainer);
   
     return;
   }
   
-  
-
   //Orden de ciudad por alfabeto
   localizaciones.sort((a, b) => {
     if (a.ciudad < b.ciudad) return -1;
@@ -218,14 +211,10 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           ${web}
       </div>
       </div>
-      ${promo ? `<div class="promo-banner" style="background:${promotionStyle.background}; color:${promotionStyle.color};">
+      ${promo ? `<div class="promo-banner" style="background:${promotionBackground}; color:${promotionColor};">
       <div class="promo-content">${promo}</div>
       <div class="promo-content">${promo}</div>
       </div>` : ''}`;
-
-    /*   console.log(
-        `logoNut: ${logoNut}, nombre: ${nombre}, direccion: ${direccion}, web: ${web}`
-      ); */
 
     button.innerHTML = buttonContent;
 
@@ -239,7 +228,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       ),
       title: value.sede,
       icon: {
-        url: markerOnly, //NOTA: El icono del logo tenemos que enviarlo por url guardandolo en la tabla.
+        url: markerOnly,
         scaledSize: new google.maps.Size(35, 42),
       },
     });
