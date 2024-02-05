@@ -39,6 +39,10 @@
 		}
 
 		wp_enqueue_media();
+		wp_enqueue_style(
+			'admin',
+			plugin_dir_url( __FILE__ ). 'css/admin.css'
+		);
 		wp_enqueue_script(
 			'mediaUploader',
 			plugin_dir_url( __FILE__ ). 'js/mediaUploader.js',
@@ -114,6 +118,15 @@
 				'type' 				=> 'number',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
+			'_localizador_promotion_group', 
+			'_localizador_effect', 
+			array(
+				'type' 				=> 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_boolean',
 			)
 		);
 		register_setting( 
