@@ -97,8 +97,27 @@
                             </fieldset>
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <th scope="row">Imagen "No encontrado"</th>
+                        <td>
+                            <fieldset class="structure-selection">
+                                <input type="hidden" name="_localizador_icon_not_found" id="attachment_id" value=<?php echo get_option('_localizador_icon_not_found')?>>
+                                <div class="row" style="width: 100px;" >
+                                    <img id="attachment_preview" style="width: 100%;" src=<?php echo esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_not_found'), 'full', true))?> />
+                                </div>
+                                <button class="button" id="media-uploader-button">Seleccionar icono</button>
+                                <?php
+                                    if(get_option('_localizador_icon_not_found')){
+                                        ?>
+                                            <button class="button" id="media-delete-icon" style="color: #cc1818; border-color: #cc1818;" >Eliminar</button>
+                                        <?php
+                                    }
+                                ?>
+                                <p class="description">Es la imagen que aparece cuando no se detectaron coincidencias en la busqueda.</p>
+                            </fieldset>
+                        </td>
+                    </tr>
                 </table>
-
                 <?php submit_button(); ?>
             </form>
         <?php

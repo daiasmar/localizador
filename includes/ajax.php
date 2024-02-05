@@ -19,6 +19,7 @@
                 'marker_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map_active'), 'full', true)),
                 'logo' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list'), 'full', true)),
                 'logo_active' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_list_active'), 'full', true)),
+                'not_found' => esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_not_found'), 'full', true)),
             ),
             'promotion' => array(
                 'message' => esc_attr(get_option('_localizador_promotion')),

@@ -121,6 +121,15 @@
 			)
 		);
 		register_setting( 
+			'_localizador_settings_group',
+			'_localizador_icon_not_found',
+			array(
+				'type' 				=> 'number',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_number',
+			)
+		);
+		register_setting( 
 			'_localizador_promotion_group', 
 			'_localizador_effect', 
 			array(

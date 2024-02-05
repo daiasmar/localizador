@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
+          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
         }
 
         document
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
+            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
           });
       };
 
@@ -87,10 +87,10 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, promoText, promotionColor, promotionBackground, promotionEffect, ciudadesDisponibles) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, ciudadesDisponibles) {
 
   // MENSAJE SI NO HAY RESULTADO.
-  const imageUrl = 'http://localhost/nut/wp-content/uploads/2024/02/Recurso-3.png';
+  const imageUrl = notFound;
 
   if (localizaciones.length === 0) {
     const localPointsContainer = document.getElementById("localPointsContainer");
@@ -243,6 +243,48 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       },
     });
 
+    marker.addListener("click", () => {
+      document.querySelectorAll(".button-points").forEach((otherButton, otherIndex) => {
+        otherButton.classList.remove("active");
+        const otherLogoNut = otherButton.querySelector(".logo-nut, .logo-nut2");
+        if (otherLogoNut) {
+          otherLogoNut.src = logoOnly;
+          otherLogoNut.classList.remove("logo-nut2");
+          otherLogoNut.classList.add("logo-nut");
+        }
+  
+        if (markers[otherIndex]) {
+          markers[otherIndex].setIcon({
+            url: markerOnly,
+            scaledSize: new google.maps.Size(35, 45),
+          });
+        }
+      });
+  
+      const button = document.querySelectorAll(".button-points")[index];
+      button.classList.add("active");
+      const logoNut = button.querySelector(".logo-nut");
+      if (logoNut) {
+        logoNut.src = logoActive;
+        logoNut.classList.remove("logo-nut");
+        logoNut.classList.add("logo-nut2");
+      }
+  
+      if (marker) {
+        marker.setIcon({
+          url: markerActive,
+          scaledSize: new google.maps.Size(46, 60),
+        });
+      }
+  
+      map.panTo(new google.maps.LatLng(
+        parseFloat(value.coordenadas[0]),
+        parseFloat(value.coordenadas[1])
+      ));
+      map.setZoom(10);
+      button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    });
+   
     markers.push(marker);
 
   });
