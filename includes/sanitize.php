@@ -11,4 +11,8 @@
 
         return sanitize_text_field($hex);
     }
+    function sanitize_boolean($bool){
+        
+        return boolval($bool);
+    }
 ?>

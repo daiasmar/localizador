@@ -23,7 +23,8 @@
             'promotion' => array(
                 'message' => esc_attr(get_option('_localizador_promotion')),
                 'color' => esc_attr(get_option('_localizador_color')),
-                'background' => esc_attr(get_option('_localizador_background'))
+                'background' => esc_attr(get_option('_localizador_background')),
+                'effect' => esc_attr(get_option('_localizador_effect')),
             )
         ];
 

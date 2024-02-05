@@ -33,6 +33,16 @@
                             <p class="description">El color del fondo del banner de promoción en el mapa. Por defecto es negro.</p>
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <th scope="row">Efecto texto en movimiento</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="_localizador_effect" <?php echo get_option('_localizador_effect') ? 'checked' : '' ?>>
+                                <span class="slider round"></span>
+                            </label>
+                            <p class="description">Activa el movimiento en el mensaje de promoción.</p>
+                        </td>
+                    </tr>
                 </table>
 
                 <?php submit_button(); ?>
