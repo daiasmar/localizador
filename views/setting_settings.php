@@ -11,7 +11,6 @@
                         <th scope="row">Clave de API</th>
                         <td>
                             <input type="text" name="_localizador_api_key" value="<?php echo esc_attr(get_option('_localizador_api_key'));?>"/>
-                            <p class="description" id="api-key-description"></p>
                         </td>
                     </tr>
                 </table>
