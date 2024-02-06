@@ -82,15 +82,15 @@ class Edit{
         let cpSpan = createElements('span', cpLabel, false, false, false, ['input-text-wrap']);
         createElements('input', cpSpan, data.cp, false, {'type' : 'text', 'name' : '_localizador_locations[cp]'});
 
-        let localidadLabel = createElements('label', leftColumn);
-        createElements('span', localidadLabel, false, 'Localidad', false, ['title']);
-        let localidadSpan = createElements('span', localidadLabel, false, false, false, ['input-text-wrap']);
-        createElements('input', localidadSpan, data.localidad, false, {'type' : 'text', 'name' : '_localizador_locations[localidad]'});
+        let poblacionLabel = createElements('label', leftColumn);
+        createElements('span', poblacionLabel, false, 'Población', false, ['title']);
+        let poblacionSpan = createElements('span', poblacionLabel, false, false, false, ['input-text-wrap']);
+        createElements('input', poblacionSpan, data.poblacion, false, {'type' : 'text', 'name' : '_localizador_locations[poblacion]'});
 
-        let ciudadLabel = createElements('label', rightColumn);
-        createElements('span', ciudadLabel, false, 'Ciudad', false, ['title']);
-        let ciudadSpan = createElements('span', ciudadLabel, false, false, false, ['input-text-wrap']);
-        createElements('input', ciudadSpan, data.ciudad, false, {'type' : 'text', 'name' : '_localizador_locations[ciudad]'});
+        let provinciaLabel = createElements('label', rightColumn);
+        createElements('span', provinciaLabel, false, 'Provincia', false, ['title']);
+        let provinciaSpan = createElements('span', provinciaLabel, false, false, false, ['input-text-wrap']);
+        createElements('input', provinciaSpan, data.provincia, false, {'type' : 'text', 'name' : '_localizador_locations[provincia]'});
 
         let latitudLabel = createElements('label', rightColumn);
         createElements('span', latitudLabel, false, 'Latitud', false, ['title']);

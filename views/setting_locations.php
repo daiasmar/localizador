@@ -40,9 +40,9 @@
                                                 </span>
                                             </label>
                                             <label>
-                                                <span class="title">Localidad *</span>
+                                                <span class="title">Población *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[localidad]" class="ptitle" placeholder="Nueva localidad" >
+                                                    <input type="text" name="_localizador_locations[poblacion]" class="ptitle" placeholder="Nueva población" >
                                                     <p class="description">Municipio, localidad, distrito o barrio.</p>
                                                 </span>
                                             </label>
@@ -51,10 +51,9 @@
                                     <fieldset class="inline-edit-col-right">
                                         <div class="inline-edit-col">
                                             <label>
-                                                <span class="title">Ciudad *</span>
+                                                <span class="title">Provincia *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="text" name="_localizador_locations[ciudad]" class="ptitle" placeholder="Nueva ciudad">
-                                                    <p class="description">Provincia o ciudad.</p>
+                                                    <input type="text" name="_localizador_locations[provincia]" class="ptitle" placeholder="Nueva provincia">
                                                 </span>
                                             </label>
                                             <label>
@@ -130,18 +129,18 @@
                                 </span>
                             </a>
                         </th>
-                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'localidad' ? $order : ''; ?>">
-                            <a href="?page=localizador-menu&tab=setting-locations&orderby=localidad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
-                                <span>Localidad</span>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'poblacion' ? $order : ''; ?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=poblacion&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Población</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
                                     <span class="sorting-indicator desc" aria-hidden="true"></span>
                                 </span>
                             </a>
                         </th>
-                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'ciudad' ? $order : ''; ?>">
-                            <a href="?page=localizador-menu&tab=setting-locations&orderby=ciudad&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
-                                <span>Ciudad</span>
+                        <th class="manage-column column-title column-primary sorted <?php echo $orderby == 'provincia' ? $order : ''; ?>">
+                            <a href="?page=localizador-menu&tab=setting-locations&orderby=provincia&order=<?php echo $order == 'asc' ? 'desc' : 'asc'?>">
+                                <span>Provincia</span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
                                     <span class="sorting-indicator desc" aria-hidden="true"></span>
@@ -177,8 +176,8 @@
 
                         <td><p><?php echo $location['calle']?></p></td>
                         <td><p><?php echo $location['cp']?></p></td>
-                        <td><p><?php echo $location['localidad']?></p></td>
-                        <td><p><?php echo $location['ciudad']?></p></td>
+                        <td><p><?php echo $location['poblacion']?></p></td>
+                        <td><p><?php echo $location['provincia']?></p></td>
                         <td><p><?php echo $location['coordenadas'][0]?></p></td>
                         <td><p><?php echo $location['coordenadas'][1]?></p></td>
 

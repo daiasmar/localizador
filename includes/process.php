@@ -32,13 +32,13 @@
             return;
         }
 
-        if(empty($_POST['_localizador_locations']['localidad'])){
-            add_settings_error('setting_locations', esc_attr('localidad'), 'El campo "Localidad" es obligatorio.');
+        if(empty($_POST['_localizador_locations']['poblacion'])){
+            add_settings_error('setting_locations', esc_attr('poblacion'), 'El campo "Población" es obligatorio.');
             return;
         }
 
-        if(empty($_POST['_localizador_locations']['ciudad'])){
-            add_settings_error('setting_locations', esc_attr('ciudad'), 'El campo "Ciudad" es obligatorio.');
+        if(empty($_POST['_localizador_locations']['provincia'])){
+            add_settings_error('setting_locations', esc_attr('provincia'), 'El campo "Provincia" es obligatorio.');
             return;
         }
 
@@ -61,8 +61,8 @@
         $sede = sanitize_text_field($_POST['_localizador_locations']['sede']);
         $calle = sanitize_text_field($_POST['_localizador_locations']['calle']);
         $cp = absint($_POST['_localizador_locations']['cp']);
-        $localidad = sanitize_text_field($_POST['_localizador_locations']['localidad']);
-        $ciudad = sanitize_text_field($_POST['_localizador_locations']['ciudad']);
+        $poblacion = sanitize_text_field($_POST['_localizador_locations']['poblacion']);
+        $provincia = sanitize_text_field($_POST['_localizador_locations']['provincia']);
         $latitud = $_POST['_localizador_locations']['latitud'];
         $longitud = $_POST['_localizador_locations']['longitud'];
         $URL = absint($_POST['_localizador_locations']['URL']);
@@ -78,8 +78,8 @@
                 'sede' => $sede,
                 'calle' => $calle,
                 'cp' => $cp,
-                'localidad' => $localidad,
-                'ciudad' => $ciudad,
+                'poblacion' => $poblacion,
+                'provincia' => $provincia,
                 'coordenadas' => array($latitud, $longitud),
                 'URL' => $URL,
                 'promocion' => $promocion
@@ -110,8 +110,8 @@
                     $locations_option[$key]['sede'] = $sede;
                     $locations_option[$key]['calle'] = $calle;
                     $locations_option[$key]['cp'] = $cp;
-                    $locations_option[$key]['localidad'] = $localidad;
-                    $locations_option[$key]['ciudad'] = $ciudad;
+                    $locations_option[$key]['poblacion'] = $poblacion;
+                    $locations_option[$key]['provincia'] = $provincia;
                     $locations_option[$key]['coordenadas'][0] = $latitud;
                     $locations_option[$key]['coordenadas'][1] = $longitud;
                     $locations_option[$key]['URL'] = $URL;
