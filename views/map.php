@@ -7,7 +7,7 @@
     $content = '
     <div class="overview-map">
         <div class="content-map">
-            <div class="search-bar"><input type="search" placeholder="Busca tu ciudad o código postal."></div>
+            <div class="search-bar"><input type="search" placeholder="Busca tu provincia, población o código postal."></div>
             <div class="columns-map dis-flex">
                 <div class="container-external">
                     <div id="localPointsContainer" class="column-left">
