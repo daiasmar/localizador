@@ -1,5 +1,9 @@
 <?php
 
+    /**
+     * Function to display 'Promoción' settings.
+     */
+
     function setting_promotion(){
         ?>
             <form action="options.php" method="post">
