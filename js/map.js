@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data.locations);
-      const ciudadesDisponibles = Array.from(new Set(data.locations.map(location => location.ciudad)));
+      const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
 
       console.log(data);
       const apiGoogle = data.api;
@@ -22,13 +22,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
+          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasDisponibles);
         }
 
         document
           .querySelector('.search-bar input[type="search"]')
           .addEventListener("input", function () {
+            
             const terminoBusqueda = this.value.trim();
+            
 
             const localizacionesFiltradas = filtrarLocalizaciones(
               data.locations,
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, ciudadesDisponibles);
+            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasDisponibles);
           });
       };
 
@@ -76,7 +78,8 @@ function filtrarLocalizaciones(localizaciones, terminoBusqueda) {
   if (!terminoBusqueda) return localizaciones;
   return localizaciones.filter(
     (loc) =>
-      loc.ciudad.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+      loc.provincia.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+      loc.poblacion.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
       (loc.cp && String(loc.cp).startsWith(terminoBusqueda))
   );
 }
@@ -87,50 +90,78 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, ciudadesDisponibles) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, provinciasDisponibles) {
 
   // MENSAJE SI NO HAY RESULTADO.
   const imageUrl = notFound;
 
   if (localizaciones.length === 0) {
     const localPointsContainer = document.getElementById("localPointsContainer");
+  
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
     imageElement.className = 'imagen-lupa';
     imageElement.alt = 'Icono de no hay resultados';
     localPointsContainer.appendChild(imageElement);
+
     const paragraph = document.createElement('p');
     paragraph.className = 'no-result';
-    paragraph.textContent = 'No hemos encontrado ningún trastero';
+    const searchInput = document.querySelector('.search-bar input[type="search"]');
+    const valorBusqueda = searchInput.value;
+    paragraph.textContent = 'No hemos encontrado ningún trastero por tu búsqueda: ' + valorBusqueda;  
     localPointsContainer.appendChild(paragraph);
-    console.log(ciudadesDisponibles, "////////");
-  
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'buttons-container';
-  
-    ciudadesDisponibles.forEach(ciudad => {
-      const cityButton = document.createElement("button");
-      cityButton.textContent = ciudad;
-      cityButton.classList.add("city-button");
-  
-      cityButton.addEventListener('click', () => {
-        const searchInput = document.querySelector('.search-bar input[type="search"]');
-        searchInput.value = ciudad;
-        searchInput.dispatchEvent(new Event('input'));
-      });
-  
-      buttonsContainer.appendChild(cityButton);
+
+    const customSelectWrapper = document.createElement('div');
+    customSelectWrapper.className = 'custom-select-wrapper';
+
+    const customSelect = document.createElement('div');
+    customSelect.className = 'custom-select';
+
+    const customSelectTrigger = document.createElement('div');
+    customSelectTrigger.setAttribute('tabindex', '0');
+    customSelectTrigger.className = 'custom-select__trigger';
+    customSelectTrigger.innerHTML = '<span>Ver trasteros por provincias</span><div class="arrow"></div>';
+    
+    const customOptions = document.createElement('div');
+    customOptions.className = 'custom-options';
+
+    provinciasDisponibles.forEach(ciudad => {
+        const customOption = document.createElement('span');
+        customOption.className = 'custom-option';
+        customOption.setAttribute('data-value', ciudad);
+        customOption.textContent = ciudad;
+
+        customOption.addEventListener('click', function() {
+            document.querySelector('.custom-select__trigger span').textContent = this.textContent;
+            customSelect.classList.remove('open');
+            const searchInput = document.querySelector('.search-bar input[type="search"]');
+            searchInput.value = this.getAttribute('data-value');
+            searchInput.dispatchEvent(new Event('input'));
+        });
+
+        customOptions.appendChild(customOption);
     });
-  
-    localPointsContainer.appendChild(buttonsContainer);
-  
-    return;
+
+    customSelect.appendChild(customSelectTrigger);
+    customSelect.appendChild(customOptions);
+    customSelectWrapper.appendChild(customSelect);
+    localPointsContainer.appendChild(customSelectWrapper);
+
+    customSelectTrigger.addEventListener('click', () => {
+        customSelect.classList.toggle('open');
+    });
+
+    window.addEventListener('click', (e) => {
+        if (!customSelect.contains(e.target)) {
+            customSelect.classList.remove('open');
+        }
+    });
   }
-  
+
   //Orden de ciudad por alfabeto
   localizaciones.sort((a, b) => {
-    if (a.ciudad < b.ciudad) return -1;
-    if (a.ciudad > b.ciudad) return 1;
+    if (a.provincia < b.provincia) return -1;
+    if (a.provincia > b.provincia) return 1;
 
     // Si las ciudades son iguales, compara por sede
     return a.sede.localeCompare(b.sede);
@@ -190,10 +221,10 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     });
 
     const logoNut = `<img src="${logoOnly}" class="logo-nut">`;
-    const nombre = `<p><b>${value.sede ? value.sede : "Sede no disponible"}</b><p>`;
+    const nombre = `<p><b>${value.sede ? value.sede : "Sede no disponible"}</b></p>`;
     const direccion = `<p>${value.calle ? value.calle : "Dirección no disponible"
-      }<p>`;
-    const nombreCiudad = `<p>${value.ciudad}, ${value.cp}`;
+      }</p>`;
+    const nombreCiudad = `<p>${value.cp}, ${value.poblacion}, ${value.provincia}</p>`;
     const web = `<a href="${value.URL ? value.URL : "#"
       }" target="_blank">+ info</a>`;
     const promo = value.promocion == 'on' ? promoText : "";
