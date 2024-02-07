@@ -1,4 +1,8 @@
 <?php
+
+    /**
+     * Function to display 'Configuración' settings.
+     */
     
     function setting_settings(){
         ?>

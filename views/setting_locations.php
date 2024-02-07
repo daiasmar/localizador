@@ -1,6 +1,10 @@
 <?php
 
-    require_once __DIR__.'/../includes/process.php';
+    /**
+     * Function to display 'Localizaciones' settings.
+     */
+
+    require_once __DIR__.'/../includes/process.php'; // Function to form processing.
 
     function setting_locations(){
         ?>

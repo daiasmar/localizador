@@ -1,4 +1,9 @@
 <?php
+
+    /**
+     * shortcode content.
+     */
+
     $content = '
     <div class="overview-map">
         <div class="content-map">
