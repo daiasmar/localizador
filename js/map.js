@@ -8,10 +8,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
-
-      console.log(data);
       const apiGoogle = data.api;
 
       window.initMap = async function () {
@@ -93,16 +90,18 @@ function limpiarMapaYContenedor() {
 function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, provinciasDisponibles) {
 
   // MENSAJE SI NO HAY RESULTADO.
-  const imageUrl = notFound;
+  const imageUrl = notFound; 
 
   if (localizaciones.length === 0) {
     const localPointsContainer = document.getElementById("localPointsContainer");
-  
-    const imageElement = document.createElement('img');
-    imageElement.src = imageUrl;
-    imageElement.className = 'imagen-lupa';
-    imageElement.alt = 'Icono de no hay resultados';
-    localPointsContainer.appendChild(imageElement);
+
+    if (imageUrl && imageUrl !== '') {
+      const imageElement = document.createElement('img');
+      imageElement.src = imageUrl;
+      imageElement.className = 'imagen-lupa';
+      imageElement.alt = 'Icono de no hay resultados';
+      localPointsContainer.appendChild(imageElement);
+    }
 
     const paragraph = document.createElement('p');
     paragraph.className = 'no-result';
@@ -220,12 +219,12 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       map.setZoom(10);
     });
 
-    const logoNut = `<img src="${logoOnly}" class="logo-nut">`;
-    const nombre = `<p><b>${value.sede ? value.sede : "Sede no disponible"}</b></p>`;
-    const direccion = `<p>${value.calle ? value.calle : "Dirección no disponible"
+    const logoNut = logoOnly && logoOnly !== '' ? `<img src="${logoOnly}" class="logo-nut">` : '';
+    const nombre = `<p class="text-sede"><b>${value.sede ? value.sede : "Sede no disponible"}</b></p>`;
+    const direccion = `<p class="text-calle">${value.calle ? value.calle : "Dirección no disponible"
       }</p>`;
-    const nombreCiudad = `<p>${value.cp}, ${value.poblacion}, ${value.provincia}</p>`;
-    const web = `<a href="${value.URL ? value.URL : "#"
+    const nombreCiudad = `<p class="text-direccion">${value.cp}, ${value.poblacion}, ${value.provincia}</p>`;
+    const web = `<a class="text-info" href="${value.URL ? value.URL : "#"
       }" target="_blank">+ info</a>`;
     const promo = value.promocion == 'on' ? promoText : "";
 
@@ -268,13 +267,14 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         parseFloat(value.coordenadas[1])
       ),
       title: value.sede,
-      icon: {
+      icon: markerOnly && markerOnly !== '' ? {
         url: markerOnly,
         scaledSize: new google.maps.Size(35, 42),
-      },
+      } : undefined,
     });
-
+    
     marker.addListener("click", () => {
+      const useDefaultMarkerActive = !markerActive || markerActive === '';
       document.querySelectorAll(".button-points").forEach((otherButton, otherIndex) => {
         otherButton.classList.remove("active");
         const otherLogoNut = otherButton.querySelector(".logo-nut, .logo-nut2");
@@ -283,15 +283,15 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           otherLogoNut.classList.remove("logo-nut2");
           otherLogoNut.classList.add("logo-nut");
         }
-  
+    
         if (markers[otherIndex]) {
-          markers[otherIndex].setIcon({
+          markers[otherIndex].setIcon(useDefaultMarkerActive ? {} : {
             url: markerOnly,
             scaledSize: new google.maps.Size(35, 45),
           });
         }
       });
-  
+    
       const button = document.querySelectorAll(".button-points")[index];
       button.classList.add("active");
       const logoNut = button.querySelector(".logo-nut");
@@ -300,14 +300,14 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         logoNut.classList.remove("logo-nut");
         logoNut.classList.add("logo-nut2");
       }
-  
+    
       if (marker) {
-        marker.setIcon({
+        marker.setIcon(useDefaultMarkerActive ? {} : {
           url: markerActive,
           scaledSize: new google.maps.Size(46, 60),
         });
       }
-  
+    
       map.panTo(new google.maps.LatLng(
         parseFloat(value.coordenadas[0]),
         parseFloat(value.coordenadas[1])
@@ -315,6 +315,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       map.setZoom(10);
       button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     });
+    
    
     markers.push(marker);
 
