@@ -127,6 +127,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     provinciasDisponibles.forEach(ciudad => {
         const customOption = document.createElement('span');
         customOption.className = 'custom-option';
+        customOption.className = 'text-calle';
         customOption.setAttribute('data-value', ciudad);
         customOption.textContent = ciudad;
 

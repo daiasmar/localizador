@@ -72,7 +72,7 @@
 
         $sede = sanitize_text_field($_POST['_localizador_locations']['sede']);
         $calle = sanitize_text_field($_POST['_localizador_locations']['calle']);
-        $cp = absint($_POST['_localizador_locations']['cp']);
+        $cp = $_POST['_localizador_locations']['cp'];
         $poblacion = sanitize_text_field($_POST['_localizador_locations']['poblacion']);
         $provincia = sanitize_text_field($_POST['_localizador_locations']['provincia']);
         $latitud = $_POST['_localizador_locations']['latitud'];

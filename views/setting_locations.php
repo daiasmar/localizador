@@ -39,7 +39,7 @@
                                             <label>
                                                 <span class="title">CP *</span>
                                                 <span class="input-text-wrap">
-                                                    <input type="number" name="_localizador_locations[cp]" class="ptitle" placeholder="00000" min="10000" max="99999">
+                                                    <input type="number" name="_localizador_locations[cp]" class="ptitle" placeholder="00000" min="1000" max="99999">
                                                     <p class="description">Código postal.</p>
                                                 </span>
                                             </label>
