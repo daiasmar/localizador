@@ -291,6 +291,9 @@
     font-size: 1.1rem;
     font-family: "GT PRESSURA", sans-serif;
 }
+.text-sede.active{
+    color: #e8ca4d;
+}
 .text-calle{
     font-size: 0.95rem;
     font-family: "Helvetica Neue LT Std MdCn", Sans-serif;
@@ -302,6 +305,7 @@
 .text-info{
     font-family: "Helvetica Neue LT Std MdCn", Sans-serif;
 }
+
 @media (max-width: 900px) {
 
     .overview-map{
