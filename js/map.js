@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.locations);
+      console.log(data);
       const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
 
       console.log(data);
