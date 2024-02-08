@@ -126,8 +126,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
 
     provinciasDisponibles.forEach(ciudad => {
         const customOption = document.createElement('span');
-        customOption.className = 'custom-option';
-        customOption.className = 'text-calle';
+        customOption.className = 'custom-option text-calle';
         customOption.setAttribute('data-value', ciudad);
         customOption.textContent = ciudad;
 
@@ -178,7 +177,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         .querySelectorAll(".button-points")
         .forEach((otherButton, otherIndex) => {
           otherButton.classList.remove("active");
-          otherButton.querySelector('.text-sede').classList.remove('active');
+          // otherButton.querySelector('.text-sede').classList.remove('active');
           const otherLogoNut = otherButton.querySelector(
             ".logo-nut, .logo-nut2"
           );
@@ -197,7 +196,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         });
 
       button.classList.add("active");
-      button.querySelector('.text-sede').classList.add('active');
+      // button.querySelector('.text-sede').classList.add('active');
       const logoNut = button.querySelector(".logo-nut");
       if (logoNut) {
         logoNut.src =
