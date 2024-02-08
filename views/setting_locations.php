@@ -105,7 +105,10 @@
                 $orderby = $_GET['orderby'] ?? 'sede';
                 $order = $_GET['order'] ?? 'asc';
                 $order_constant = $order == 'asc' ? SORT_ASC : SORT_DESC;
-                array_multisort(array_column($locations, $orderby), $order_constant, $locations);
+
+                if(!empty($locations)){
+                    array_multisort(array_column($locations, $orderby), $order_constant, $locations);
+                }
             ?>
 
             <h2 class="title">Todas las localizaciones</h2>
