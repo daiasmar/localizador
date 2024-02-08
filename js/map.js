@@ -177,7 +177,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         .querySelectorAll(".button-points")
         .forEach((otherButton, otherIndex) => {
           otherButton.classList.remove("active");
-          // otherButton.querySelector('.text-sede').classList.remove('active');
+          otherButton.querySelector('.text-sede').classList.remove('active');
           const otherLogoNut = otherButton.querySelector(
             ".logo-nut, .logo-nut2"
           );
@@ -196,7 +196,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         });
 
       button.classList.add("active");
-      // button.querySelector('.text-sede').classList.add('active');
+      button.querySelector('.text-sede').classList.add('active');
       const logoNut = button.querySelector(".logo-nut");
       if (logoNut) {
         logoNut.src =
