@@ -18,9 +18,9 @@
                         </td>
                     </tr>
                 </table>
-
-                <h2 class="title">Styling Wizard: Google Maps</h2>
-                <table class="form-table">
+                
+                <h2 class="title">Ajustes del mapa</h2>
+                <table class="form-table permalink-structure">
                     <tr valign="top">
                         <th scope="row">Tema</th>
                         <td>
@@ -29,13 +29,9 @@
                                 <option value="silver" <?php echo get_option('_localizador_theme') == 'silver' ? 'selected' : '' ?>>Silver</option>
                                 <option value="dark" <?php echo get_option('_localizador_theme') == 'dark' ? 'selected' : '' ?>>Dark</option>
                             </select>
-                            <p class="description">Estilos predefinidos para el mapa. Si no hay un tema seleccionado tendrá el por defecto.</p>
+                            <p class="description">Temas predefinidos de Google para el mapa. Si no hay un tema seleccionado tendrá el por defecto.</p>
                         </td>
                     </tr>
-                </table>
-                
-                <h2 class="title">Ajustes del mapa</h2>
-                <table class="form-table permalink-structure">
                     <tr valign="top">
                         <th scope="row">Marcador</th>
                         <td>

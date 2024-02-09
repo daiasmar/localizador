@@ -2,6 +2,10 @@
 .gm-style img {
     max-width: none !important;
 }
+.gmnoprint {
+    top: 72px;
+    bottom: 0 !important;
+}
 /* FIN estilos GOOGLE MAPS */
 
 .overview-map {
