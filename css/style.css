@@ -186,8 +186,8 @@
 }
 .promo-content {
     display: inline-block;
-    padding-left: 20%;
-    animation: scroll-left 20s linear infinite;
+    margin-right: 50px;
+    position: relative;
     font-size: 12px;
     padding-top: 2px;
     font-family: "Helvetica Neue LT Std MdCn", Sans-serif;

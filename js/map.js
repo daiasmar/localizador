@@ -541,7 +541,6 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       } else if (promo) {
         divContent = `<div class="promo-banner" style="background:${promotionBackground}; color:${promotionColor};">
         <div class="promo-content">${promo}</div>
-        <div class="promo-content">${promo}</div>
         </div>`;
       } else {
         divContent = '';
@@ -625,4 +624,35 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     markers.push(marker);
 
   });
+
+  if(promotionEffect){
+    const promoBanner =  document.querySelector('.promo-banner');
+    const originalCont = document.querySelector('.promo-content');
+
+    let totalWidth = originalCont.clientWidth;
+    const computedStyle = window.getComputedStyle(originalCont);
+    const marginRight = parseInt(computedStyle.marginRight);
+
+    while (totalWidth < promoBanner.clientWidth) {
+        const clone = originalCont.cloneNode(true);
+        promoBanner.appendChild(clone);
+        totalWidth += clone.clientWidth + marginRight ; 
+    }
+    
+    const promoContents = document.querySelectorAll('.promo-content');
+    let position = 0;
+
+    function moveTexts() {
+      promoContents.forEach(content => {
+        position -= 0.075;
+        if (position < -content.clientWidth) {
+          position = marginRight;
+        }
+        content.style.left = position + 'px';
+      });
+      requestAnimationFrame(moveTexts);
+    }
+
+    moveTexts();
+  }
 }
