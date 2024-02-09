@@ -10,10 +10,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then((data) => {
       const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
       const apiGoogle = data.api;
-      console.log(data);
       window.initMap = async function () {
         const position = { lat: 40.4167754, lng: -3.7037902 };
-        let themeSelect = "silver";
+        let themeSelect = data.theme;
         let themeActive = [];
         
         const silverTheme = [
