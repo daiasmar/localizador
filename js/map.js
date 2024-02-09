@@ -626,33 +626,37 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
   });
 
   if(promotionEffect){
-    const promoBanner =  document.querySelector('.promo-banner');
-    const originalCont = document.querySelector('.promo-content');
+    const promoBanners =  document.querySelectorAll('.promo-banner');
 
-    let totalWidth = originalCont.clientWidth;
-    const computedStyle = window.getComputedStyle(originalCont);
-    const marginRight = parseInt(computedStyle.marginRight);
+    promoBanners.forEach(promoBanner => {
+      const originalCont = promoBanner.querySelector('.promo-content');
 
-    while (totalWidth < promoBanner.clientWidth) {
-        const clone = originalCont.cloneNode(true);
-        promoBanner.appendChild(clone);
-        totalWidth += clone.clientWidth + marginRight ; 
-    }
-    
-    const promoContents = document.querySelectorAll('.promo-content');
-    let position = 0;
+      let totalWidth = originalCont.clientWidth;
+      const computedStyle = window.getComputedStyle(originalCont);
+      const marginRight = parseInt(computedStyle.marginRight);
+      
+      let position = 0;
+      let decrementAmount = 0.075;
 
-    function moveTexts() {
-      promoContents.forEach(content => {
-        position -= 0.075;
-        if (position < -content.clientWidth) {
-          position = marginRight;
-        }
-        content.style.left = position + 'px';
-      });
-      requestAnimationFrame(moveTexts);
-    }
-
-    moveTexts();
+      while (totalWidth < promoBanner.clientWidth) {
+          const clone = originalCont.cloneNode(true);
+          promoBanner.appendChild(clone);
+          totalWidth += clone.clientWidth + marginRight; 
+      }
+      
+      const promoContents = promoBanner.querySelectorAll('.promo-content');
+      
+      function moveTexts() {
+        promoContents.forEach(content => {
+          position -= decrementAmount;
+          if (position < -content.clientWidth) {
+            position = marginRight;
+          }
+          content.style.left = position + 'px';
+        });
+        requestAnimationFrame(moveTexts);
+      }
+      moveTexts();
+    })
   }
 }
