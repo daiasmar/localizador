@@ -25,7 +25,7 @@
                         <th scope="row">Tema</th>
                         <td>
                             <select name="_localizador_theme">
-                                <option value="" <?php echo get_option('_localizador_theme') == false ? 'selected' : '' ?>>— Elegir —</option>
+                                <option value="" <?php echo get_option('_localizador_theme') == false ? 'selected' : '' ?>>Estándar</option>
                                 <option value="silver" <?php echo get_option('_localizador_theme') == 'silver' ? 'selected' : '' ?>>Silver</option>
                                 <option value="dark" <?php echo get_option('_localizador_theme') == 'dark' ? 'selected' : '' ?>>Dark</option>
                             </select>
