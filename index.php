@@ -133,6 +133,15 @@
 			)
 		);
 		register_setting( 
+			'_localizador_settings_group', // setting group name
+			'_localizador_theme', // setting name
+			array(
+				'type' 				=> 'string', // data type
+				'show_in_rest'      => true, // Whether to expose the setting in the REST API
+				'sanitize_callback' => 'sanitize_text', // sanitize callback
+			)
+		);
+		register_setting( 
 			'_localizador_settings_group', 
 			'_localizador_icon_map',
 			array(

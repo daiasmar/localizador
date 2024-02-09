@@ -21,6 +21,7 @@
 
         $data = [
             'api' => esc_attr(get_option('_localizador_api_key')), // API Key
+            'theme' => esc_attr(get_option('_localizador_theme')), // Map theme
             'locations' => $locations, // Locations array
             'media' => array( // Media images for the map
                 'marker' => false != get_option('_localizador_icon_map') ? esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_map'), 'full', true)) : '',

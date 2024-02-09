@@ -42,7 +42,7 @@
    appearance: none;
 }
 .search-bar input[type=search]:focus {
-   outline: none;
+   outline: none ;
 }
 .dis-flex {
     display: flex;
