@@ -23,8 +23,8 @@ $settings = array(
     '_localizador_promotion',
     '_localizador_color',
     '_localizador_background',
-    '_localizador_locations'
-
+    '_localizador_locations',
+    '_localizador_theme'
 );
 
 /**
