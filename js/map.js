@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     .then((response) => response.json())
     .then((data) => {
       const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
+      const provinciasOrdenadas = provinciasDisponibles.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));    
       const apiGoogle = data.api;
       window.initMap = async function () {
         const position = { lat: 40.4167754, lng: -3.7037902 };
@@ -322,7 +323,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         });
 
         if (typeof getLocation === "function") {
-          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasDisponibles);
+          getLocation(data.locations, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasOrdenadas);
         }
 
         document
@@ -359,7 +360,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
               map.setZoom(10);
             }
 
-            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasDisponibles);
+            getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasOrdenadas);
           });
       };
 
@@ -390,7 +391,7 @@ function limpiarMapaYContenedor() {
   markers = [];
 }
 
-function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, provinciasDisponibles) {
+function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoActive, notFound, promoText, promotionColor, promotionBackground, promotionEffect, provinciasOrdenadas) {
 
   // MENSAJE SI NO HAY RESULTADO.
   const imageUrl = notFound; 
@@ -427,7 +428,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     const customOptions = document.createElement('div');
     customOptions.className = 'custom-options';
 
-    provinciasDisponibles.forEach(ciudad => {
+    provinciasOrdenadas.forEach(ciudad => {
         const customOption = document.createElement('span');
         customOption.className = 'custom-option text-calle';
         customOption.setAttribute('data-value', ciudad);
@@ -459,14 +460,19 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         }
     });
   }
-
-  //Orden de ciudad por alfabeto
+/*   //Orden de ciudad por alfabeto
   localizaciones.sort((a, b) => {
     if (a.provincia < b.provincia) return -1;
     if (a.provincia > b.provincia) return 1;
 
     // Si las ciudades son iguales, compara por sede
     return a.sede.localeCompare(b.sede);
+  });
+ */
+  localizaciones.sort((a, b) => {
+    const comparacionProvincia = a.provincia.localeCompare(b.provincia, 'es', { sensitivity: 'variant' });
+    if (comparacionProvincia !== 0) return comparacionProvincia;
+    return a.sede.localeCompare(b.sede, 'es', { sensitivity: 'variant' });
   });
 
   const localPointsContainer = document.getElementById("localPointsContainer");
