@@ -315,9 +315,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
         } else if (themeSelect === "dark") {
           themeActive = darkTheme;
         }
-        
+        const esMovil = window.innerWidth < 768;
+              const zoomPredeterminado2 = esMovil ? 5 : 6.2;
         map = new google.maps.Map(document.getElementById("map-localizador"), {
-          zoom: 6.2,
+          
+          zoom: zoomPredeterminado2,
           center: position,
           styles: themeActive
         });
@@ -348,16 +350,19 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 lat: 40.4167754,
                 lng: -3.7037902,
               };
-              const zoomPredeterminado = 6.2;
+              const esMovil = window.innerWidth < 768;
+              const zoomPredeterminado = esMovil ? 5 : 6.2;
               map.panTo(centroPredeterminado);
               map.setZoom(zoomPredeterminado);
             } else if (localizacionesFiltradas.length > 0) {
+              const esMovil2 = window.innerWidth < 768;
+              const zoomPredeterminado3 = esMovil2 ? 7.7 : 9;
               const centroMapa = {
                 lat: parseFloat(localizacionesFiltradas[0].coordenadas[0]),
                 lng: parseFloat(localizacionesFiltradas[0].coordenadas[1]),
               };
               map.panTo(centroMapa);
-              map.setZoom(10);
+              map.setZoom(zoomPredeterminado3);
             }
 
             getLocation(localizacionesFiltradas, data.media.marker, data.media.marker_active, data.media.logo, data.media.logo_active, data.media.not_found, data.promotion.message, data.promotion.color, data.promotion.background, data.promotion.effect, provinciasOrdenadas);
@@ -379,10 +384,28 @@ function filtrarLocalizaciones(localizaciones, terminoBusqueda) {
   if (!terminoBusqueda) return localizaciones;
   return localizaciones.filter(
     (loc) =>
-      loc.provincia.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-      loc.poblacion.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+      loc.provincia.toLowerCase().startsWith(terminoBusqueda.toLowerCase()) ||
+      loc.poblacion.toLowerCase().startsWith(terminoBusqueda.toLowerCase()) ||
       (loc.cp && String(loc.cp).startsWith(terminoBusqueda))
   );
+}
+
+function filtrarLocalizaciones(localizaciones, terminoBusqueda) {
+  if (!terminoBusqueda) return localizaciones;
+
+  const terminoNormalizado = terminoBusqueda.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  return localizaciones.filter((loc) => {
+    const provinciaNormalizada = loc.provincia.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (provinciaNormalizada.startsWith(terminoNormalizado)) return true;
+
+    const poblacionNormalizada = loc.poblacion.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    if (poblacionNormalizada.startsWith(terminoNormalizado)) return true;
+
+    if (loc.cp && String(loc.cp).startsWith(terminoBusqueda)) return true;
+
+    return false;
+  });
 }
 
 function limpiarMapaYContenedor() {
@@ -460,15 +483,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
         }
     });
   }
-/*   //Orden de ciudad por alfabeto
-  localizaciones.sort((a, b) => {
-    if (a.provincia < b.provincia) return -1;
-    if (a.provincia > b.provincia) return 1;
-
-    // Si las ciudades son iguales, compara por sede
-    return a.sede.localeCompare(b.sede);
-  });
- */
+ 
   localizaciones.sort((a, b) => {
     const comparacionProvincia = a.provincia.localeCompare(b.provincia, 'es', { sensitivity: 'variant' });
     if (comparacionProvincia !== 0) return comparacionProvincia;
@@ -515,6 +530,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       }
 
       if (markers[index]) {
+        
         markers[index].setIcon({
           url: markerActive,
           scaledSize: new google.maps.Size(46, 60),
@@ -527,7 +543,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
           parseFloat(value.coordenadas[1])
         )
       );
-      map.setZoom(10);
+      map.setZoom(15);
     });
 
     const logoNut = logoOnly && logoOnly !== '' ? `<img src="${logoOnly}" class="logo-nut">` : '';
@@ -570,6 +586,10 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
 
     localPointsContainer.appendChild(button);
 
+    const esMovil = window.innerWidth < 768;
+    const tamañoMarker = esMovil ? new google.maps.Size(25, 32) : new google.maps.Size(35, 42);
+
+
     const marker = new google.maps.Marker({
       map: map,
       position: new google.maps.LatLng(
@@ -579,7 +599,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       title: value.sede,
       icon: markerOnly && markerOnly !== '' ? {
         url: markerOnly,
-        scaledSize: new google.maps.Size(35, 42),
+        scaledSize: tamañoMarker,
       } : undefined,
     });
     
@@ -587,6 +607,7 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       const useDefaultMarkerActive = !markerActive || markerActive === '';
       document.querySelectorAll(".button-points").forEach((otherButton, otherIndex) => {
         otherButton.classList.remove("active");
+        otherButton.querySelector('.text-sede').classList.remove('active');
         const otherLogoNut = otherButton.querySelector(".logo-nut, .logo-nut2");
         if (otherLogoNut) {
           otherLogoNut.src = logoOnly;
@@ -604,6 +625,10 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
     
       const button = document.querySelectorAll(".button-points")[index];
       button.classList.add("active");
+      const textSede = button.querySelector('.text-sede');
+      if (textSede) {
+        textSede.classList.add('active');
+      }
       const logoNut = button.querySelector(".logo-nut");
       if (logoNut) {
         logoNut.src = logoActive;
@@ -612,21 +637,23 @@ function getLocation(localizaciones, markerOnly, markerActive, logoOnly, logoAct
       }
     
       if (marker) {
+        const esMovilActive = window.innerWidth < 768;
+        const tamañoMarkerActive = esMovilActive ? new google.maps.Size(38, 50) : new google.maps.Size(46, 60);
         marker.setIcon(useDefaultMarkerActive ? {} : {
           url: markerActive,
-          scaledSize: new google.maps.Size(46, 60),
+          scaledSize: tamañoMarkerActive,
         });
       }
+    
     
       map.panTo(new google.maps.LatLng(
         parseFloat(value.coordenadas[0]),
         parseFloat(value.coordenadas[1])
       ));
-      map.setZoom(10);
+      map.setZoom(15);
       button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     });
     
-   
     markers.push(marker);
 
   });
