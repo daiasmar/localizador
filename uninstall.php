@@ -23,7 +23,6 @@ $settings = array(
     '_localizador_promotion',
     '_localizador_color',
     '_localizador_background',
-    '_localizador_locations',
     '_localizador_theme'
 );
 
@@ -33,5 +32,15 @@ $settings = array(
 
 foreach($settings as $option){
     delete_option($option);
+}
+
+/**
+ * Delete locations if empty.
+ */
+
+$locations = get_option('_localizador_locations');
+
+if(empty($locations)){
+    delete_option('_localizador_locations');
 }
 ?>
