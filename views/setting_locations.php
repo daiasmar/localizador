@@ -169,7 +169,7 @@
                         
                         <th scope="row" class="check-column"></th>
 
-                        <td>
+                        <td data-colname="Sede" class="title column-title has-row-actions column-primary page-title">
                             <strong><?php echo $location['sede']?></strong>
                             <div class="row-actions">
                                 <span class="inline hide-if-no-js edit">
@@ -179,16 +179,17 @@
                                     <a href="" data-id=<?php echo $location['id'] ?>>Eliminar</a>
                                 </span>
                             </div>
+                            <button type="button" class="toggle-row"><span class="screen-reader-text">Mostrar más detalles</span></button>
                         </td>
 
-                        <td><p><?php echo $location['calle']?></p></td>
-                        <td><p><?php echo $location['cp']?></p></td>
-                        <td><p><?php echo $location['poblacion']?></p></td>
-                        <td><p><?php echo $location['provincia']?></p></td>
-                        <td><p><?php echo $location['coordenadas'][0]?></p></td>
-                        <td><p><?php echo $location['coordenadas'][1]?></p></td>
+                        <td data-colname="Calle"><p><?php echo $location['calle']?></p></td>
+                        <td data-colname="CP"><p><?php echo $location['cp']?></p></td>
+                        <td data-colname="Población"><p><?php echo $location['poblacion']?></p></td>
+                        <td data-colname="Provincia"><p><?php echo $location['provincia']?></p></td>
+                        <td data-colname="Latitud"><p><?php echo $location['coordenadas'][0]?></p></td>
+                        <td data-colname="Longitud"><p><?php echo $location['coordenadas'][1]?></p></td>
 
-                        <td>
+                        <td data-colname="URL">
                             <?php if(!empty($location['URL'])) : ?>
 
                             <strong>
@@ -198,7 +199,7 @@
                             <?php endif ?>
                         </td>
 
-                        <td><p><?php echo $location['promocion'] ? 'SI' : 'NO' ?></p></td>
+                        <td data-colname="¿Promoción?"><p><?php echo $location['promocion'] ? 'SI' : 'NO' ?></p></td>
                     </tr>
 
                     <?php endforeach ?>
