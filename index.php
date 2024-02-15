@@ -4,7 +4,7 @@
 	* Plugin Name: Localizador
 	* Plugin URI: https://rockinmedia.es/
 	* Description: Mapa de localizaciones 
-	* Version: 0.1.8
+	* Version: 0.1.9
 	* Author: Rockin
 	* Author URI: https://rockinmedia.es/
 	**/
