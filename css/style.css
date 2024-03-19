@@ -133,9 +133,9 @@
     background-color: #8e8e8e;
     border-radius: 20px;
 }
-.container-external::-webkit-scrollbar:window-inactive {
+/* .container-external::-webkit-scrollbar:window-inactive {
     display: none;
-}
+} */
 .container-external::-webkit-scrollbar-thumb {
     background-color: rgb(255, 255, 255);
     border-radius: 6px;
@@ -350,6 +350,7 @@
     }
     .container-external{
         padding-left: 0;
+        border-bottom: 2px solid rgb(255, 255, 255, 0.2); /* borde para el corte de provincias */
     }
     .logo-nut{
         height: 34px !important;
@@ -378,7 +379,9 @@
     .container-external {
         order: 2;
         width: 100%;
-        height: 55%;
+        height: 62%;
+        direction: ltr;
+        overflow-x: hidden;
     }
     .no-result{
         margin: 20px 0;
@@ -397,6 +400,18 @@
 
     .text-direccion {
         font-size: 0.85rem;
+    }
+
+    .button-points{
+        width: 95%;
+        padding: 10px 0 10px 0 !important;
+    }
+    .promo-banner{
+        width: auto;
+    }
+
+    .column-left {
+        overflow-x: hidden;
     }
 
 }
