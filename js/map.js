@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       const provinciasDisponibles = Array.from(new Set(data.locations.map(location => location.provincia)));
       const provinciasOrdenadas = provinciasDisponibles.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));    
       const apiGoogle = data.api;
+      console.log(data.locations);
       window.initMap = async function () {
         const position = { lat: 40.4167754, lng: -3.7037902 };
         let themeSelect = data.theme;

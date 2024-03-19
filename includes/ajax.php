@@ -12,11 +12,63 @@
 	 */
 
     function localizador(){
+        // Parse the URL of the home URL and extract the domain
+        $urlparts = wp_parse_url(home_url());
+		$domain = $urlparts['host'];
 
         $locations = get_option('_localizador_locations'); // Value option from the WordPress options table.
+		$message = esc_attr(get_option('_localizador_promotion')); // Retrieve and escape the promotion message from the WordPress options table.
+		
+		// Translate promotion message using Weglot if the Weglot class exists.
+		if(class_exists('Context_Weglot')){
+            // Get the Weglot instance and the current language code
+			$weglot_instance = Context_Weglot::weglot_get_context();
+			$current_language = $weglot_instance->get_service( 'Request_Url_Service_Weglot' )->get_current_language()->getInternalCode();
+			
+            // If the current language is not Spanish, translate the message.
+			if($current_language != 'es'){
+                // Retrieve Weglot API key and construct translation API URL.
+				$weglot_api = $weglot_instance->get_service( 'Option_Service_Weglot' )->get_option('api_key_private');
+				$weglot_url = 'https://api.weglot.com/translate?api_key=' . $weglot_api ;
+
+                // Set request arguments for translation API.
+				$request_args = array(
+					'body' => json_encode(array(
+						'l_from' => 'es',
+						'l_to' => $current_language,
+						'words' => [
+							["w" => $message, "t" => 1],
+						],
+						'request_url' => $domain,
+					)),
+					'headers' => array(
+						'Content-Type' => 'application/json'
+					),
+				);
+                // Send POST request to Weglot translation API.
+				$response = wp_remote_post($weglot_url, $request_args);
+                
+                // Retrieve and decode translated data.
+				$translated_data = json_decode(wp_remote_retrieve_body($response), true);
+
+                // Update the message with the translated text.
+				$message = $translated_data['to_words'][0];
+			}
+		}
 
         foreach($locations as &$location){
-            $location['URL'] = get_permalink($location['URL']); // Changes URL number page to link.
+            // Get the permalink URL for the location
+            $location_link = get_permalink($location['URL']); // Changes URL number page to link.
+
+            // Check if Context_Weglot class exists and the current language is not Spanish
+            if(class_exists('Context_Weglot') && $current_language != 'es'){
+                $explode_url = explode('/', $location_link); // Split the URL into parts
+                array_splice($explode_url, 3, 0, $current_language); // Insert the current language code at the third position
+                $location_link = implode('/', $explode_url,); // Recombine the URL parts into a string
+            }
+
+            // Update the URL of the location with the modified link
+            $location['URL'] = $location_link;
         }
 
         $data = [
@@ -35,7 +87,7 @@
                 'not_found' => false != get_option('_localizador_icon_not_found') ? esc_url(wp_get_attachment_image_url(get_option('_localizador_icon_not_found'), 'full', true)) : '',
             ),
             'promotion' => array( // Promotion text and styles for the map.
-                'message' => esc_attr(get_option('_localizador_promotion')),
+                'message' => $response,
                 'color' => esc_attr(get_option('_localizador_color')),
                 'background' => esc_attr(get_option('_localizador_background')),
                 'effect' => esc_attr(get_option('_localizador_effect')),
